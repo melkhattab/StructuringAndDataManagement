@@ -15,14 +15,12 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Role.finRole", 
-			query="select r from Role d where r.libelle = :libelle")
+			query="select r from Role r where r.libelle = :libelle")
 })
 public class Role implements Serializable {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_role")
-	private int idRole ; 
 	
+//	private int idRole ; 
+	@Id
 	private String libelle ; 
 	private String description ; 
 	
@@ -39,10 +37,16 @@ public class Role implements Serializable {
 		this.libelle = libelle;
 		
 	}
-
+	public Role(String libelle, String description) {
+		super();
+		this.libelle = libelle;
+		this.description = description ;
+		
+	}
+/*
 	public int getIdRole() {
 		return idRole;
-	}
+	}*/
 
 	public String getLibelle() {
 		return libelle;

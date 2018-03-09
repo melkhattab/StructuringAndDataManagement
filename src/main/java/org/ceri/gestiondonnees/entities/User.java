@@ -21,17 +21,15 @@ public class User implements Serializable
 {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_utilisateur")
-	private int idUtilisateur ;
+	private String email ; 
 	
 	private String nom ;
 	private String prenom ; 
-	private String email ; 
+	
 	private String password ;
 	
 	@ManyToOne
-	@JoinColumn(name="id_role")
+	@JoinColumn(name="libelle")
 	private Role role ; 
 	
 	@ManyToOne
@@ -51,12 +49,6 @@ public class User implements Serializable
 		this.email = email;
 		this.password = password;
 	}
-
-
-	public int getIdUtilisateur() {
-		return idUtilisateur;
-	}
-
 
 	public String getNom() {
 		return nom;
@@ -81,12 +73,6 @@ public class User implements Serializable
 	public String getEmail() {
 		return email;
 	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 
 	public Role getRole() {
 		return role;

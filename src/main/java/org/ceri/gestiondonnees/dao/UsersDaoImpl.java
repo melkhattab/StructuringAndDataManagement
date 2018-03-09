@@ -1,8 +1,11 @@
 package org.ceri.gestiondonnees.dao;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -33,7 +36,7 @@ public class UsersDaoImpl implements IUsersDao {
 	public Collection<User> getUsersByRole(Role role) {
 		// TODO Auto-generated method stub
 		Query query = em.createQuery("select u from User u where u.role.idRole = :idRole") ;
-		query.setParameter("idRole", role.getIdRole()) ;
+		query.setParameter("idRole", role.getLibelle()) ;
 		return query.getResultList();
 	}
 	
@@ -65,7 +68,7 @@ public class UsersDaoImpl implements IUsersDao {
 	@Override
 	public void addRole(Role role) {
 		// TODO Auto-generated method stub
-		Role r = em.find(Role.class, role);
+		Role r = em.find(Role.class, role.getLibelle());
 		if(r == null)
 			em.persist(role);
 		else
@@ -89,12 +92,15 @@ public class UsersDaoImpl implements IUsersDao {
 		query.setParameter("e", droit.getEcrire());
 		query.setParameter("m", droit.getModifier());
 		query.setParameter("s", droit.getSupp());
-		Droits d = (Droits) query.getSingleResult();
-		if(d == null) {
+		try {
+			Droits d = (Droits) query.getSingleResult();
+			if(d != null)
+				System.out.println("Droit existe déjà");
+		}
+		catch(NoResultException ex) {
 			em.persist(droit);
 		}
-		else
-			System.out.println("le droit existe déjà");
+		
 	}
 
 	@Override
@@ -107,9 +113,9 @@ public class UsersDaoImpl implements IUsersDao {
 	@Override
 	public Droits getDroits(User user) {
 		// TODO Auto-generated method stub
-		User u = em.find(User.class, user.getIdUtilisateur());
-		Query query = em.createQuery("select u from User d where u.droit = :idDroits and :idUser") ; 
-		query.setParameter("idUser", u.getIdUtilisateur()) ;
+	//	User u = em.find(User.class, user.getEmail());
+	//	Query query = em.createQuery("select u from User d where u.droit = :idDroits and u.email= :email") ; 
+	//	query.setParameter("idUser", u.getEmail()) ;
 		return null ;
 	}
 

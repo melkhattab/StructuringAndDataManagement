@@ -14,7 +14,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Droits.findDroit", query="select d from Droits d where d.lire = :l and d.ecrire = :e and d.modifier = :m and d.supp = :s")
+	@NamedQuery(name="Droits.findDroit", 
+			query="select d from Droits d where d.lire = :l and d.ecrire = :e and d.modifier = :m and d.supp = :s")
 })
 public class Droits implements Serializable {
 	@Id

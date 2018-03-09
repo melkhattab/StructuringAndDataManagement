@@ -17,27 +17,29 @@ public class MainTest {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		IUserMetier metier = (IUserMetier) context.getBean("businessLogic");
 		/* ----------------   écriture ddans la base de données -----------------------*/
-	/*
-		Role r = new Role("Admin");
-		metier.addRole(r);
+	
+		metier.addRole(new Role("Admin"));
+		metier.addRole(new Role("Admin","this is the administrator role"));
 		metier.addRole(new Role("Student"));
 		metier.addRole(new Role("Professor"));
-	
+		
 		metier.addDroit(new Droits("oui","oui","oui","oui"));
 		metier.addDroit(new Droits("oui","oui","oui","non"));
 		metier.addDroit(new Droits("oui","oui","non","non"));
 		metier.addDroit(new Droits("oui","non","non","non"));
-	
+		metier.addDroit(new Droits("oui","oui","oui","oui"));
+		
 		metier.addUser(new User("el khattab", "mahmoud", "machin@gmail.com", "abcde"));
 		metier.addUser(new User("last name 1", "first name 1", "mail1@gmail.com", "password1"));
 		metier.addUser(new User("last name 2", "first name 2", "mail2@gmail.com", "password2"));
 		System.out.println("tout s'est bien passé");
-	*/
+	
 		
 	/* ----------------   consultation de données de la base de données -----------------------*/
+	/*
 		User u = (User)metier.getUser(1);
 		metier.addDroit(new Droits("oui","oui","oui","oui"));
-		System.out.println("l'utilisateur est : "+u.getNom()+" "+u.getPrenom());
+		System.out.println("l'utilisateur est : "+u.getNom()+" "+u.getPrenom());*/
 	}
 
 }
