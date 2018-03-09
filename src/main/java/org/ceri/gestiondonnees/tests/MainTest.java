@@ -16,7 +16,6 @@ public class MainTest {
 		// TODO Auto-generated method stub
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		IUserMetier metier = (IUserMetier) context.getBean("businessLogic");
-		
 		/* ----------------   écriture ddans la base de données -----------------------*/
 	/*
 		Role r = new Role("Admin");
@@ -37,6 +36,7 @@ public class MainTest {
 		
 	/* ----------------   consultation de données de la base de données -----------------------*/
 		User u = (User)metier.getUser(1);
+		metier.addDroit(new Droits("oui","oui","oui","oui"));
 		System.out.println("l'utilisateur est : "+u.getNom()+" "+u.getPrenom());
 	}
 

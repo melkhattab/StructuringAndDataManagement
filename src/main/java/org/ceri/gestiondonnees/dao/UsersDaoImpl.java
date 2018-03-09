@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.ceri.gestiondonnees.entities.Droits;
 import org.ceri.gestiondonnees.entities.Role;
@@ -14,6 +15,8 @@ public class UsersDaoImpl implements IUsersDao {
 
 	@PersistenceContext
 	private EntityManager em ; 
+	
+	/* ------------------------------  User   ---------------------------------------*/
 	@Override
 	public void addUser(User user) {
 		em.persist(user);
@@ -40,20 +43,33 @@ public class UsersDaoImpl implements IUsersDao {
 		Query query = em.createQuery("select u from User u") ;
 		return query.getResultList();
 	}
-
-	public void addDroitsToUser(Droits droit) {
+	@Override
+	public void addDroitsToUser(Droits droit, User user) {
 		
-		Droits d = em.find(Droits.class) ;
+		Droits d = em.find(Droits.class,droit) ;
+		if(d != null){
+			user.setDroits(droit);
+			em.merge(user);
+		}
+	}
+	public void addRoleToUser(Role role, User user) {
+		Role r = em.find(Role.class, role.getLibelle());
+		if(r!= null) {
+			user.setRole(role);
+			em.merge(user);
+		}
 	}
 	
-	
-	
-	
+	/* ------------------------------  Role   ---------------------------------------*/
 	
 	@Override
 	public void addRole(Role role) {
 		// TODO Auto-generated method stub
-		em.persist(role);
+		Role r = em.find(Role.class, role);
+		if(r == null)
+			em.persist(role);
+		else
+			System.out.println("le role existe déjà");
 
 	}
 
@@ -64,10 +80,21 @@ public class UsersDaoImpl implements IUsersDao {
 		return query.getResultList();
 	}
 
+	/* ---------------------------  Droits  -------------------------*/
 	@Override
 	public void addDroit(Droits droit) {
 		// TODO Auto-generated method stub
-		em.persist(droit);
+		Query query = em.createNamedQuery("Droits.findDroit");
+		query.setParameter("l", droit.getLire());
+		query.setParameter("e", droit.getEcrire());
+		query.setParameter("m", droit.getModifier());
+		query.setParameter("s", droit.getSupp());
+		Droits d = (Droits) query.getSingleResult();
+		if(d == null) {
+			em.persist(droit);
+		}
+		else
+			System.out.println("le droit existe déjà");
 	}
 
 	@Override

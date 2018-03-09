@@ -2,6 +2,7 @@ package org.ceri.gestiondonnees.metier;
 
 import java.util.Collection;
 
+import org.apache.log4j.DailyRollingFileAppender;
 import org.ceri.gestiondonnees.dao.IUsersDao;
 import org.ceri.gestiondonnees.entities.Droits;
 import org.ceri.gestiondonnees.entities.Role;
@@ -35,11 +36,12 @@ public class UserMetierImpl implements IUserMetier {
 		return null;
 	}
 	@Override
-	public void addDroitsToUser(Droits droit) {
-		usersDao.addDroitsToUser(droit);
+	public void addDroitsToUser(Droits droit, User user) {
+		usersDao.addDroitsToUser(droit,user);
 	}
-	
-	
+	public void addRoleToUser(Role role, User user) {
+		usersDao.addRoleToUser(role, user);
+	}
 	/* -----------------  Role functionalities  ----------------- */
 	@Override
 	public void addRole(Role role) {
