@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 public class Droits implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_dr")
 	private int idDroits ;
 	
 	private String lire ; 
@@ -29,7 +28,7 @@ public class Droits implements Serializable {
 	private String supp ;
 	
 	@OneToMany(mappedBy="droits")
-	private Collection<User> users ;
+	private Collection<Utilisateur> users ;
 	
 	public Droits() {
 		super();

@@ -6,7 +6,6 @@
    <persistence-unit name="usersDataBase" transaction-type="RESOURCE_LOCAL">
       <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
       <properties>
-      	<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"></property>
          <property name="hibernate.show_sql" value="true"/>
          <property name="hibernate.hbm2ddl.auto" value="update"/>
       </properties>

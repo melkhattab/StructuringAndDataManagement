@@ -8,6 +8,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd"> 
 	
 	<bean id="dao"  class="org.ceri.gestiondonnees.dao.UsersDaoImpl"></bean>
+	
 	<bean id="businessLogic" class="org.ceri.gestiondonnees.metier.UserMetierImpl">	
 		<property name="usersDao" ref="dao"></property>
 	</bean>

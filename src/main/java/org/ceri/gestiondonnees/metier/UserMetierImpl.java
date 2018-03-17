@@ -6,7 +6,7 @@ import org.apache.log4j.DailyRollingFileAppender;
 import org.ceri.gestiondonnees.dao.IUsersDao;
 import org.ceri.gestiondonnees.entities.Droits;
 import org.ceri.gestiondonnees.entities.Role;
-import org.ceri.gestiondonnees.entities.User;
+import org.ceri.gestiondonnees.entities.Utilisateur;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -19,27 +19,27 @@ public class UserMetierImpl implements IUserMetier {
 	}
 	
 	@Override
-	public void addUser(User user) {
+	public void addUser(Utilisateur user) {
 		// TODO Auto-generated method stub
 		usersDao.addUser(user);
 	}
 
 	@Override
-	public User getUser(int idUser) {
+	public Utilisateur getUser(int idUser) {
 		// TODO Auto-generated method stub
 		return usersDao.getUser(idUser);
 	}
 
 	@Override
-	public Collection<User> getAllUsers() {
+	public Collection<Utilisateur> getAllUsers() {
 		// TODO Auto-generated method stub
-		return null;
+		return usersDao.getAllUsers();
 	}
 	@Override
-	public void addDroitsToUser(Droits droit, User user) {
+	public void addDroitsToUser(Droits droit, Utilisateur user) {
 		usersDao.addDroitsToUser(droit,user);
 	}
-	public void addRoleToUser(Role role, User user) {
+	public void addRoleToUser(Role role, Utilisateur user) {
 		usersDao.addRoleToUser(role, user);
 	}
 	/* -----------------  Role functionalities  ----------------- */
@@ -50,7 +50,7 @@ public class UserMetierImpl implements IUserMetier {
 	}
 
 	@Override
-	public Collection<User> getUsersByRole(Role role) {
+	public Collection<Utilisateur> getUsersByRole(Role role) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -74,7 +74,7 @@ public class UserMetierImpl implements IUserMetier {
 	}
 
 	@Override
-	public Droits getDroits(User user) {
+	public Droits getDroits(Utilisateur user) {
 		// TODO Auto-generated method stub
 		return null;
 	}

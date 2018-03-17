@@ -25,7 +25,7 @@ public class Role implements Serializable {
 	private String description ; 
 	
 	@OneToMany(mappedBy="role")
-	private Collection<User> users ;
+	private Collection<Utilisateur> users ;
 
 	public Role() {
 		super();
