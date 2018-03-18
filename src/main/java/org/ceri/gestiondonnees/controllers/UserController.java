@@ -3,7 +3,7 @@ package org.ceri.gestiondonnees.controllers;
 
 import java.util.Collection;
 
-import org.ceri.gestiondonnees.entities.Utilisateur;
+import org.ceri.gestiondonnees.entities.User;
 import org.ceri.gestiondonnees.metier.IUserMetier;
 import org.ceri.gestiondonnees.models.LoginDetails;
 import org.ceri.gestiondonnees.models.UserAccount;
@@ -35,15 +35,16 @@ public class UserController {
 	
 	@RequestMapping(value = "/signIn", method=RequestMethod.POST)
 	public String sinIn(LoginDetails loginDetails, Model model) {
-		Utilisateur user = metier.getUser(1) ;
-		//userDetails.setUser(user);
-		model.addAttribute("ConnectedUser", user);
-		return "dossier/home";
+		User user = metier.getUserByEmail(loginDetails.getEmail()) ;
+		if(user!= null)
+			return "dossier/home";
+		model.addAttribute("errorConnection", "email ou mot de passe incorrecte");
+		return "login";
 	}
 	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
 	public String createAccountForm(Model model) {
 		// this controller allows to create a new user account
-		model.addAttribute("userAccount", new UserAccount());
+		model.addAttribute("userInformation", new UserAccount());
 		return "createAccount";
 	}
 	

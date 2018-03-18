@@ -7,7 +7,7 @@ import javax.jws.soap.SOAPBinding.Use;
 
 import org.ceri.gestiondonnees.entities.Droits;
 import org.ceri.gestiondonnees.entities.Role;
-import org.ceri.gestiondonnees.entities.Utilisateur;
+import org.ceri.gestiondonnees.entities.User;
 import org.ceri.gestiondonnees.metier.IUserMetier;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,18 +32,18 @@ public class MainTest {
 		metier.addDroit(new Droits("oui","non","non","non"));
 		metier.addDroit(new Droits("oui","oui","oui","oui"));
 		*/
-		metier.addUser(new Utilisateur("el khattab", "mahmoud", "machin@gmail.com", "abcde"));
-		metier.addUser(new Utilisateur("last name 1", "first name 1", "mail1@gmail.com", "password1"));
-		metier.addUser(new Utilisateur("last name 2", "first name 2", "mail2@gmail.com", "password2"));
+		metier.addUser(new User("el khattab", "mahmoud", "machin@gmail.com", "abcde"));
+		metier.addUser(new User("last name 1", "first name 1", "mail1@gmail.com", "password1"));
+		metier.addUser(new User("last name 2", "first name 2", "mail2@gmail.com", "password2"));
 		System.out.println("tout s'est bien passé");
 	
 		
 	/* ----------------   consultation de données de la base de données -----------------------*/
 	//*				
-		Utilisateur u = metier.getUser(1);
+	//	User u = metier.getUser(1);
 	//	metier.addDroit(new Droits("oui","oui","oui","oui"));
 		
-		System.out.println("l'utilisateur est : "+u.getNom()+" "+u.getPrenom());
+	//	System.out.println("l'utilisateur est : "+u.getNom()+" "+u.getPrenom());
 	//*/
 	}
 

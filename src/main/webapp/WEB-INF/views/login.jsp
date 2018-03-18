@@ -8,7 +8,7 @@
 <h1>
 	  
 </h1>
-<f:form modelAttribute="userForm" method="post" action="signin">
+<f:form modelAttribute="loginDetails" method="post" action="signIn">
 	<div class="row">
 	<h2> Login : </h2>
 		<div> 

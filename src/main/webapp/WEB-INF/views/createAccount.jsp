@@ -8,7 +8,7 @@
 <h1>
 	  
 </h1>
-<f:form modelAttribute="userForm" method="post" action="signin">
+<f:form modelAttribute="userInformation" method="post" action="addAccount">
 	<div class="row">
 		<div> 
 			First name *  <f:input path="email"/>

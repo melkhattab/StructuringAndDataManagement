@@ -10,19 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+
 @Entity
-/*
-@NamedQueries({
-	@NamedQuery(name = "User.finAll", query = ""),
-	@NamedQuery(name = "", query = "")
-	}) */
 public class User implements Serializable
 
 {
 
 	@Id
-	private String email ; 
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id ; 
 	
+	private String email ; 
 	private String nom ;
 	private String prenom ; 
 	

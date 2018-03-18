@@ -12,42 +12,47 @@ import javax.persistence.TypedQuery;
 
 import org.ceri.gestiondonnees.entities.Droits;
 import org.ceri.gestiondonnees.entities.Role;
-import org.ceri.gestiondonnees.entities.Utilisateur;
+import org.ceri.gestiondonnees.entities.User;
 
 public class UsersDaoImpl implements IUsersDao {
 
 	@PersistenceContext
 	private EntityManager em ; 
 	
-	/* ------------------------------  Utilisateur   ---------------------------------------*/
+	/* ------------------------------  User   ---------------------------------------*/
 	@Override
-	public void addUser(Utilisateur user) {
+	public void addUser(User user) {
 		em.persist(user);
 	}
 
 	@Override
-	public Utilisateur getUser(int idUser) {
+	public User getUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		Utilisateur  user =  em.find(Utilisateur.class, idUser);
-		return user;
+		try {
+		Query query = em.createQuery("select u from User u where u.email = :email") ;
+		query.setParameter("email",email) ;
+		return (User) query.getSingleResult();
+		}catch(NoResultException ex) {
+			return null ;
+		}
 	}
 	
 	@Override
-	public Collection<Utilisateur> getUsersByRole(Role role) {
+	public Collection<User> getUsersByRole(Role role) {
 		// TODO Auto-generated method stub
-		Query query = em.createQuery("select u from Utilisateur u where u.role.idRole = :idRole") ;
+		Query query = em.createQuery("select u from User u where u.role.idRole = :idRole") ;
 		query.setParameter("idRole", role.getLibelle()) ;
 		return query.getResultList();
 	}
 	
 	@Override
-	public Collection<Utilisateur> getAllUsers() {
+	public Collection<User> getAllUsers() {
 		// TODO Auto-generated method stub
-		Query query = em.createQuery("select u from Utilisateur u") ;
+		Query query = em.createQuery("select u from User u") ;
 		return query.getResultList();
 	}
 	@Override
-	public void addDroitsToUser(Droits droit, Utilisateur user) {
+	public void addDroitsToUser(Droits droit, User user) {
 		
 		Droits d = em.find(Droits.class,droit) ;
 		if(d != null){
@@ -55,7 +60,7 @@ public class UsersDaoImpl implements IUsersDao {
 			em.merge(user);
 		}
 	}
-	public void addRoleToUser(Role role, Utilisateur user) {
+	public void addRoleToUser(Role role, User user) {
 		Role r = em.find(Role.class, role.getLibelle());
 		if(r!= null) {
 			user.setRole(role);
@@ -111,10 +116,10 @@ public class UsersDaoImpl implements IUsersDao {
 	}
 
 	@Override
-	public Droits getDroits(Utilisateur user) {
+	public Droits getDroits(User user) {
 		// TODO Auto-generated method stub
-	//	Utilisateur u = em.find(Utilisateur.class, user.getEmail());
-	//	Query query = em.createQuery("select u from Utilisateur d where u.droit = :idDroits and u.email= :email") ; 
+	//	User u = em.find(User.class, user.getEmail());
+	//	Query query = em.createQuery("select u from User d where u.droit = :idDroits and u.email= :email") ; 
 	//	query.setParameter("idUser", u.getEmail()) ;
 		return null ;
 	}

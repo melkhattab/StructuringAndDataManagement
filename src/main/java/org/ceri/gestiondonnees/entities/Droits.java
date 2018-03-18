@@ -28,7 +28,7 @@ public class Droits implements Serializable {
 	private String supp ;
 	
 	@OneToMany(mappedBy="droits")
-	private Collection<Utilisateur> users ;
+	private Collection<User> users ;
 	
 	public Droits() {
 		super();
