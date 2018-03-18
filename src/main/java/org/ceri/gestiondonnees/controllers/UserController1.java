@@ -16,20 +16,21 @@ public class UserController1 {
 	private IUserMetier metier ; 
 	
 	@RequestMapping(value = "/addAccount", method = RequestMethod.POST)
-	public String createAccount(Model model, UserAccount userDetails) {
+	public String createAccount(Model model, UserAccount accountDetails) {
 		// this controller add a user to database 
-		User user = metier.getUserByEmail(userDetails.getEmail());
+		User user = metier.getUserByEmail(accountDetails.getEmail());
 		if(user == null) {
-			if(userDetails.getPassword().equals(userDetails.getConfPassword())) {
-				user = new User(userDetails.getLastName(), userDetails.getFirstName(), userDetails.getEmail(), userDetails.getPassword());
+			if(!accountDetails.getPassword().equals("") && accountDetails.getPassword().equals(accountDetails.getConfPassword())) {
+				user = new User(accountDetails.getLastName(), accountDetails.getFirstName(), accountDetails.getEmail(), accountDetails.getPassword());
 				metier.addUser(user);
-				return "home";
+				return "dossier/home";
 			}
 			else {
 				model.addAttribute("errorAccount", "password incorrect") ;
 			}
 		}
-		model.addAttribute("errorAccount", "Email déjà utilisé") ;
+		else
+			model.addAttribute("errorAccount", "Email déjà utilisé") ;
 		return "createAccount";
 	}
 }

@@ -44,7 +44,7 @@ public class UserController {
 	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
 	public String createAccountForm(Model model) {
 		// this controller allows to create a new user account
-		model.addAttribute("userInformation", new UserAccount());
+		model.addAttribute("userAccount", new UserAccount());
 		return "createAccount";
 	}
 	

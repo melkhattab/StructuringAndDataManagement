@@ -5,16 +5,16 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	  
-</h1>
-<f:form modelAttribute="userInformation" method="post" action="addAccount">
+<h3>
+	  <c:if test="${not empty errorAccount}"> ${errorAccount }</c:if>
+</h3>
+<f:form modelAttribute="userAccount" method="post" action="addAccount">
 	<div class="row">
 		<div> 
-			First name *  <f:input path="email"/>
+			First name *  <f:input path="firstName"/>
 		</div>
 		<div> 
-			Last Name  * <f:input path="email"/>
+			Last Name  * <f:input path="lastName"/>
 		</div>
 		<div> 
 			Email  * <f:input path="email"/>
@@ -23,7 +23,7 @@
 			Password * <f:password path="password"/>
 		</div>
 		<div>
-			Confirm Password * <f:password path="password"/>
+			Confirm Password * <f:password path="confPassword"/>
 		</div>
 		<div>
 		<input type="submit" value="Create"/>
