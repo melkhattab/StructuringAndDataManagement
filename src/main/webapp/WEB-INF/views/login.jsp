@@ -5,9 +5,9 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	  
-</h1>
+<h3>
+	  <c:if test="${not empty errorConnection}"> ${errorConnection }</c:if>
+</h3>
 <f:form modelAttribute="loginDetails" method="post" action="signIn">
 	<div class="row">
 	<h2> Login : </h2>

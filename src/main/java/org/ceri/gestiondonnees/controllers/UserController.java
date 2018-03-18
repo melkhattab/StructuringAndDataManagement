@@ -36,9 +36,11 @@ public class UserController {
 	@RequestMapping(value = "/signIn", method=RequestMethod.POST)
 	public String sinIn(LoginDetails loginDetails, Model model) {
 		User user = metier.getUserByEmail(loginDetails.getEmail()) ;
-		if(user!= null)
-			return "dossier/home";
-		model.addAttribute("errorConnection", "email ou mot de passe incorrecte");
+		if(user!= null) {
+			if(user.getPassword().equals(loginDetails.getPassword()))
+				return "dossier/home";
+		}
+		model.addAttribute("errorConnection", "email ou mot de passe incorrect");
 		return "login";
 	}
 	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
@@ -46,6 +48,12 @@ public class UserController {
 		// this controller allows to create a new user account
 		model.addAttribute("userAccount", new UserAccount());
 		return "createAccount";
+	}
+	
+	// Controller for selecting all users 
+	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
+	public String allUsers(Model model) {
+		return "dossier/listOfUsers";
 	}
 	
 	
