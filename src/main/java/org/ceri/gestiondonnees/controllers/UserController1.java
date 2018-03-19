@@ -21,7 +21,7 @@ public class UserController1 {
 		User user = metier.getUserByEmail(accountDetails.getEmail());
 		if(user == null) {
 			if(!accountDetails.getPassword().equals("") && accountDetails.getPassword().equals(accountDetails.getConfPassword())) {
-				user = new User(accountDetails.getLastName(), accountDetails.getFirstName(), accountDetails.getEmail(), accountDetails.getPassword());
+				user = new User( accountDetails.getFirstName(), accountDetails.getLastName(), accountDetails.getEmail(), accountDetails.getPassword());
 				metier.addUser(user);
 				return "dossier/home";
 			}

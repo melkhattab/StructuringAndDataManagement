@@ -21,8 +21,8 @@ public class User implements Serializable
 	private int id ; 
 	
 	private String email ; 
-	private String nom ;
-	private String prenom ; 
+	private String lastName ;
+	private String firstName ; 
 	
 	private String password ;
 	
@@ -40,31 +40,31 @@ public class User implements Serializable
 	}
 
 
-	public User(String nom, String prenom, String email, String password) {
+	public User( String firstName,String lastName, String email, String password) {
 		super();
-		this.nom = nom;
-		this.prenom = prenom;
+		this.lastName = lastName;
+		this.firstName = firstName;
 		this.email = email;
 		this.password = password;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getLastName() {
+		return this.lastName;
 	}
 
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 
-	public String getPrenom() {
-		return prenom;
+	public String getFirstName() {
+		return this.firstName;
 	}
 
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 

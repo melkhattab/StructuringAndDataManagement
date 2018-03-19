@@ -5,9 +5,11 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	Bonjour! vous êtes Mr : ${userForm.email } ${ userForm.password }	  
-</h1>
-	
+<h3>
+	La liste des utilisateurs   
+</h3>
+	<c:forEach var="user" items="${listOfUsers}">
+		<c:out value="${user.firstName}"/>
+	</c:forEach>
 </body>
 </html>

@@ -44,15 +44,17 @@ public class UserController {
 		return "login";
 	}
 	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
-	public String createAccountForm(Model model) {
+	public String createAccountForm(Model model){
 		// this controller allows to create a new user account
 		model.addAttribute("userAccount", new UserAccount());
 		return "createAccount";
 	}
 	
 	// Controller for selecting all users 
-	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
-	public String allUsers(Model model) {
+	@RequestMapping(value = "/listOfUsers", method = RequestMethod.GET)
+	public String listOfUsers(Model model) {
+		Collection<User> listOfusers = metier.getAllUsers();
+		model.addAttribute("listOfUsers",listOfusers);
 		return "dossier/listOfUsers";
 	}
 	

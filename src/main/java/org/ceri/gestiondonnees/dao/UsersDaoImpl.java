@@ -48,8 +48,14 @@ public class UsersDaoImpl implements IUsersDao {
 	@Override
 	public Collection<User> getAllUsers() {
 		// TODO Auto-generated method stub
+		try {
 		Query query = em.createQuery("select u from User u") ;
 		return query.getResultList();
+		}
+		catch(NoResultException exc) {
+			return null ;
+		}
+		
 	}
 	@Override
 	public void addDroitsToUser(Droits droit, User user) {
