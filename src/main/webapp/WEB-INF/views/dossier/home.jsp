@@ -6,8 +6,9 @@
 </head>
 <body>
 <h1>
-	Bonjour! vous êtes Mr : ${userForm.email } ${ userForm.password }	  
+	Bonjour! vous êtes Mr : ${user.email } ${ user.password }	
+	  
 </h1>
-	
+	<a href="info"> afficher les infos</a>
 </body>
 </html>

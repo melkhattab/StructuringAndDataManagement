@@ -3,6 +3,7 @@ package org.ceri.gestiondonnees.metier;
 import java.util.Collection;
 
 import org.ceri.gestiondonnees.entities.Droits;
+import org.ceri.gestiondonnees.entities.Laborator;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
 
@@ -25,5 +26,10 @@ public interface IUserMetier {
 		public Collection<Droits> getAllDroits();
 		public Droits getDroits(User user);
 		
+		
+		
+		/* Methods that manipulate Labortor */
+		public void addLaborator(Laborator laborator);
+		public Laborator getLaboratorByName(String name);
 		
 }

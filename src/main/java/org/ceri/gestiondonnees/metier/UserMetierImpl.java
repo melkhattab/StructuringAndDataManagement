@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.apache.log4j.DailyRollingFileAppender;
 import org.ceri.gestiondonnees.dao.IUsersDao;
 import org.ceri.gestiondonnees.entities.Droits;
+import org.ceri.gestiondonnees.entities.Laborator;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,5 +79,19 @@ public class UserMetierImpl implements IUserMetier {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void addLaborator(Laborator laborator) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Laborator getLaboratorByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 }

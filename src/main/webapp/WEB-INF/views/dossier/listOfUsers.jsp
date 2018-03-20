@@ -8,8 +8,6 @@
 <h3>
 	La liste des utilisateurs   
 </h3>
-	<c:forEach var="user" items="${listOfUsers}">
-		<c:out value="${user.firstName}"/>
-	</c:forEach>
+		I'm : ${user.email}
 </body>
 </html>

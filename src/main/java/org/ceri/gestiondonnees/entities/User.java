@@ -34,6 +34,10 @@ public class User implements Serializable
 	@JoinColumn(name="id_droits")
 	private Droits droits ;
 	
+	@ManyToOne
+	@JoinColumn(name="id_laborator")
+	private Laborator laborator ;
+	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub

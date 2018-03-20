@@ -10,14 +10,17 @@ import org.ceri.gestiondonnees.models.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
+@SessionAttributes("user")
 public class UserController {
 
 	@Autowired
@@ -37,8 +40,10 @@ public class UserController {
 	public String sinIn(LoginDetails loginDetails, Model model) {
 		User user = metier.getUserByEmail(loginDetails.getEmail()) ;
 		if(user!= null) {
-			if(user.getPassword().equals(loginDetails.getPassword()))
+			if(user.getPassword().equals(loginDetails.getPassword())) {
+				model.addAttribute("user", user);
 				return "dossier/home";
+			}
 		}
 		model.addAttribute("errorConnection", "email ou mot de passe incorrect");
 		return "login";
