@@ -1,6 +1,7 @@
 package org.ceri.gestiondonnees.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -16,8 +18,14 @@ public class User implements Serializable
 
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7431927710785551534L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_user")
 	private int id ; 
 	
 	private String email ; 
@@ -31,18 +39,20 @@ public class User implements Serializable
 	private Role role ; 
 	
 	@ManyToOne
-	@JoinColumn(name="id_droits")
-	private Droits droits ;
+	@JoinColumn(name="id_permission")
+	private Permission permission ;
 	
 	@ManyToOne
 	@JoinColumn(name="id_laborator")
-	private Laborator laborator ;
+	private Laboratory laboratory ;
+	
+	@OneToMany(mappedBy="user")
+	private Collection<Corpus> corpus ;
 	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 
 	public User( String firstName,String lastName, String email, String password) {
 		super();
@@ -101,14 +111,21 @@ public class User implements Serializable
 	}
 
 
-	public Droits getDroits() {
-		return droits;
+	public Permission getPermission() {
+		return permission;
 	}
 
 
-	public void setDroits(Droits droits) {
-		this.droits = droits;
+	public void setPermission(Permission permission) {
+		this.permission = permission;
+	}
+
+	public Laboratory getLaboratory() {
+		return laboratory;
+	}
+
+	public void setLaboratory(Laboratory laboratory) {
+		this.laboratory = laboratory;
 	} 
-	
 	
 }

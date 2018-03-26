@@ -14,38 +14,37 @@ import javax.persistence.OneToMany;
 
 
 @Entity
-public class Corpus implements Serializable
+public class Laboratory implements Serializable
 
 {
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 594106101055429678L;
+	private static final long serialVersionUID = 1193144086612867313L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_corpus")
-	private int idCorpus ;
-	
+	@Column(name="id_laborator")
+	private int idLaborator ; 
 	private String name ;
 	private String description ; 
 	
-	@OneToMany(mappedBy="corpus")
-	private Collection<Laboratory> laboratories ;
-	
-	@OneToMany(mappedBy="corpus")
-	private Collection<File> files ;
+	@OneToMany(mappedBy="laboratory")
+	private Collection<User> users ;
 	
 	@ManyToOne
-	@JoinColumn(name="id_user")
-	private User user ;
+	@JoinColumn(name="id_corpus")
+	private Corpus corpus ;
 	
-	public Corpus() {
+	public Laboratory() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Corpus( String name,String description) {
+	public Laboratory( String name,String description) {
 		super();
 		this.name = name ; 
 		this.description = description ; 
@@ -69,5 +68,8 @@ public class Corpus implements Serializable
 
 	public void setDescription(String description) {
 		this.description = description;
-	}	
+	}
+
+	
+	
 }

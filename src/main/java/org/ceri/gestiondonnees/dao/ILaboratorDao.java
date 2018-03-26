@@ -1,14 +1,14 @@
 package org.ceri.gestiondonnees.dao;
 
-import org.ceri.gestiondonnees.entities.Laborator;
+import org.ceri.gestiondonnees.entities.Laboratory;
 
 public interface ILaboratorDao {
 
 	// add to database 
-	public void addLaborator(Laborator laborator);
+	public void addLaboratory(Laboratory laboratory);
 	
 	// consulatation de données 
-	public Laborator getLaboratorByName(String name);
+	public Laboratory getLaboratoryByName(String name);
 	
 	
 }

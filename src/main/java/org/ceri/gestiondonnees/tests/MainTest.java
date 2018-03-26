@@ -5,7 +5,7 @@ import java.util.Collection;
 import javax.annotation.Resource;
 import javax.jws.soap.SOAPBinding.Use;
 
-import org.ceri.gestiondonnees.entities.Droits;
+import org.ceri.gestiondonnees.entities.Permission;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
 import org.ceri.gestiondonnees.metier.IUserMetier;
@@ -26,11 +26,11 @@ public class MainTest {
 		metier.addRole(new Role("Student"));
 		metier.addRole(new Role("Professor"));
 		
-		metier.addDroit(new Droits("oui","oui","oui","oui"));
-		metier.addDroit(new Droits("oui","oui","oui","non"));
-		metier.addDroit(new Droits("oui","oui","non","non"));
-		metier.addDroit(new Droits("oui","non","non","non"));
-		metier.addDroit(new Droits("oui","oui","oui","oui"));
+		metier.addDroit(new Permission("oui","oui","oui","oui"));
+		metier.addDroit(new Permission("oui","oui","oui","non"));
+		metier.addDroit(new Permission("oui","oui","non","non"));
+		metier.addDroit(new Permission("oui","non","non","non"));
+		metier.addDroit(new Permission("oui","oui","oui","oui"));
 		*/
 		metier.addUser(new User("el khattab", "mahmoud", "machin@gmail.com", "abcde"));
 		metier.addUser(new User("last name 1", "first name 1", "mail1@gmail.com", "password1"));
@@ -41,7 +41,7 @@ public class MainTest {
 	/* ----------------   consultation de données de la base de données -----------------------*/
 	//*				
 	//	User u = metier.getUser(1);
-	//	metier.addDroit(new Droits("oui","oui","oui","oui"));
+	//	metier.addDroit(new Permission("oui","oui","oui","oui"));
 		
 	//	System.out.println("l'utilisateur est : "+u.getNom()+" "+u.getPrenom());
 	//*/

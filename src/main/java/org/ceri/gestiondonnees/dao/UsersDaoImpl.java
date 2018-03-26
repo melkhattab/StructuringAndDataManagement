@@ -10,7 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.ceri.gestiondonnees.entities.Droits;
+import org.ceri.gestiondonnees.entities.Permission;
+import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
 
@@ -38,11 +39,16 @@ public class UsersDaoImpl implements IUsersDao {
 	}
 	
 	@Override
-	public Collection<User> getUsersByRole(Role role) {
+	public Role getRoleByLibelle(String libelle) {
 		// TODO Auto-generated method stub
-		Query query = em.createQuery("select u from User u where u.role.idRole = :idRole") ;
-		query.setParameter("idRole", role.getLibelle()) ;
-		return query.getResultList();
+		try {
+			Query query = em.createQuery("select r from Role r where r.libelle = :libelle") ;
+			query.setParameter("libelle", libelle);
+			return (Role) query.getSingleResult();
+		}
+		catch(NoResultException exc) {
+			return null ;
+		}
 	}
 	
 	@Override
@@ -58,11 +64,11 @@ public class UsersDaoImpl implements IUsersDao {
 		
 	}
 	@Override
-	public void addDroitsToUser(Droits droit, User user) {
+	public void addPermissionToUser(Permission droit, User user) {
 		
-		Droits d = em.find(Droits.class,droit) ;
+		Permission d = em.find(Permission.class,droit) ;
 		if(d != null){
-			user.setDroits(droit);
+			user.setPermission(droit);
 			em.merge(user);
 		}
 	}
@@ -94,17 +100,17 @@ public class UsersDaoImpl implements IUsersDao {
 		return query.getResultList();
 	}
 
-	/* ---------------------------  Droits  -------------------------*/
+	/* ---------------------------  Permission  -------------------------*/
 	@Override
-	public void addDroit(Droits droit) {
+	public void addDroit(Permission droit) {
 		// TODO Auto-generated method stub
-		Query query = em.createNamedQuery("Droits.findDroit");
+		Query query = em.createNamedQuery("Permission.findDroit");
 		query.setParameter("l", droit.getLire());
 		query.setParameter("e", droit.getEcrire());
 		query.setParameter("m", droit.getModifier());
 		query.setParameter("s", droit.getSupp());
 		try {
-			Droits d = (Droits) query.getSingleResult();
+			Permission d = (Permission) query.getSingleResult();
 			if(d != null)
 				System.out.println("Droit existe déjà");
 		}
@@ -115,19 +121,26 @@ public class UsersDaoImpl implements IUsersDao {
 	}
 
 	@Override
-	public Collection<Droits> getAllDroits() {
+	public Collection<Permission> getAllPermission() {
 		// TODO Auto-generated method stub
-		Query query = em.createQuery("select d from Droits d") ; 
+		Query query = em.createQuery("select d from Permission d") ; 
 		return query.getResultList();
 	}
 
 	@Override
-	public Droits getDroits(User user) {
+	public Permission getPermission(User user) {
 		// TODO Auto-generated method stub
 	//	User u = em.find(User.class, user.getEmail());
 	//	Query query = em.createQuery("select u from User d where u.droit = :idDroits and u.email= :email") ; 
 	//	query.setParameter("idUser", u.getEmail()) ;
 		return null ;
+	}
+	// methods for laboratory 
+	@Override
+	public void addLaboratory(Laboratory laboratory) {
+		// TODO Auto-generated method stub
+		if(laboratory!= null)
+			em.persist(laboratory);
 	}
 
 }

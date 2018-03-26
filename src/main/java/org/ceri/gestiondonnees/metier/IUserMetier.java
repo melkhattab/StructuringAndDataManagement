@@ -2,8 +2,8 @@ package org.ceri.gestiondonnees.metier;
 
 import java.util.Collection;
 
-import org.ceri.gestiondonnees.entities.Droits;
-import org.ceri.gestiondonnees.entities.Laborator;
+import org.ceri.gestiondonnees.entities.Permission;
+import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
 
@@ -12,24 +12,24 @@ public interface IUserMetier {
 		public void addUser(User user);
 		public User getUserByEmail(String email);
 		public Collection<User> getAllUsers();
-		public void addDroitsToUser(Droits droit, User user);
+		public void addPermissionToUser(Permission droit, User user);
 		public void addRoleToUser(Role role, User user);
 		
 		// methods concerning roles 
 		public void addRole(Role role);
-		public Collection<User> getUsersByRole(Role role);
+		public Role getRoleByLibelle(String libelle);
 		public Collection<Role> getAllRoles();
 		
 		// methods concerning droits 
 		
-		public void addDroit(Droits droit);
-		public Collection<Droits> getAllDroits();
-		public Droits getDroits(User user);
+		public void addDroit(Permission droit);
+		public Collection<Permission> getAllPermission();
+		public Permission getPermission(User user);
 		
 		
 		
 		/* Methods that manipulate Labortor */
-		public void addLaborator(Laborator laborator);
-		public Laborator getLaboratorByName(String name);
+		public void addLaboratory(Laboratory laboratory);
+		public Laboratory getLaboratoryByName(String name);
 		
 }
