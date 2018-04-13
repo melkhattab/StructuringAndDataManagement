@@ -1,5 +1,7 @@
 ## Project's goal
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f7ff8e46afc84437b9f9b9aa913821ca)](https://app.codacy.com/app/elkhattab.mahmoud/StructuringAndDataManagement?utm_source=github.com&utm_medium=referral&utm_content=ELKHATTABMAHMOUD/StructuringAndDataManagement&utm_campaign=badger)
+
 Master's Degree Project description : test
 
 le but de ce projet est de réaliser une application web pour la gestion et la structuration de données hétérogènes.
