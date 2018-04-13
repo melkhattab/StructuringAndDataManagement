@@ -1,3 +1,8 @@
+## Badges 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3d95f5db869b405ba561d58b0c2c95a8)](https://www.codacy.com/app/elkhattab.mahmoud/StructuringAndDataManagement?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ELKHATTABMAHMOUD/StructuringAndDataManagement&amp;utm_campaign=Badge_Grade)
+
+
+
 ## Project's goal
 
 Master's Degree Project description : test
