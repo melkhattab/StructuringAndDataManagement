@@ -1,0 +1,11 @@
+#javascript
+resources/*.js
+
+#css
+resources/*.css
+
+#jars
+
+*.war
+*.jar
+*.ear
