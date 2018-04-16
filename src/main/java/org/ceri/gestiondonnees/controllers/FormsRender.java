@@ -73,17 +73,7 @@ public class FormsRender {
 		return "redirect:index";
 	}
 	
-	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
-	public String createAccountForm(Model model){
-		// this controller allows to create a new user account
-		UserAccount userAccount = new UserAccount();
-		List<Laboratory> labs = new ArrayList<Laboratory>();
-		labs.add(new Laboratory("LIA", ""));
-		labs.add(new Laboratory("LHA", ""));
-		
-		model.addAttribute("userAccount",userAccount);
-		return "forms/createAccount";
-	}
+	
 	
 	@RequestMapping(value = "/addLab")
 	public String addLaboratoryForm(Model model) {
@@ -91,11 +81,6 @@ public class FormsRender {
 		model.addAttribute("labData",new LaboratoryData());
 		return "forms/createLaboratory";
 	}
-	@RequestMapping(value = "/addRole")
-	public String addRoleForm(Model model) {
-		// this controller allows to create a new user account
-		model.addAttribute("roleData",new RoleData());
-		return "forms/createRole";
-	}
+	
 	
 }

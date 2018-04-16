@@ -12,36 +12,36 @@
 			<div class="row navbar">
 				<%@include file="../includes/navbar.jsp" %>  
 			</div>
-			<div class="row">
+			<div class="row" style="background-color: #ecf2f8;">
 				<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
 					<%@include file="../includes/sidemenubar.jsp" %>
 				</div>
 				<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10 ">
-					<div>
-						<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Hide menu</a>
-					</div>
-					<div class=" content">
-						<div class="newCorpusForm">
-							<f:form modelAttribute="corpus" method="post" action="addCorpus" >
-								<div class="form-group">
-									<label for="corpusName">Nom</label> 
-									<f:input path="corpusName" class="form-control" placeholder="Nom du corpus" />
-								</div>
-								<div class="form-group"> 
-									<label for="description">Description *</label> 
-									<f:textarea path="description" rows="5" cols="30" class="form-control" placeholder="Description du corpus"/>
-								</div>
-								<div class="form-group">
-									<label for="corpusCapacity">Capacité</label> 
-									<f:input path="capacity" class="form-control" placeholder="Capacité du corpus" />
-								</div>
-								
-								<div>
-									<button type="reset" class="btn btn-primary mb-2">Réinitialiser</button>
-									<button type="submit" class="btn btn-primary mb-2">Ajouter</button>
-								</div>
-						</f:form>
-						</div>
+					<div class="content">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Nom du corpus</th>
+									<th>Description</th>
+									<th>Laboratoires associés</th>
+									<th>Créé par </th>
+									<th>Modifier/Supprimer </th>
+							   </tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${allCorpus}" var="corpus">
+									<tr>
+										<td>${corpus.name }</td>
+										<td>${corpus.description }</td>
+										<td>${corpus.user.firstName }</td>
+										<td> 
+											list labs
+										</td>
+										<td></td>
+									</tr>
+								   </c:forEach>								
+							</tbody>
+						</table>
 					</div>
 					<div class="footer">
 						<%@include file="../includes/footer.jsp" %>

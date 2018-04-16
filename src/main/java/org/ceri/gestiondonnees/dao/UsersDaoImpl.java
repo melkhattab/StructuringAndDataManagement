@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.ceri.gestiondonnees.entities.Permission;
+import org.ceri.gestiondonnees.entities.Corpus;
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
@@ -141,6 +142,32 @@ public class UsersDaoImpl implements IUsersDao {
 		// TODO Auto-generated method stub
 		if(laboratory!= null)
 			em.persist(laboratory);
+	}
+
+	/* =========================================== corpus methods ===============================================
+	   ==========================================================================================================*/
+	
+	@Override
+	public void addCorpus(Corpus corpus) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Collection<Corpus> getAllCorpus() {
+		try {
+			Query query = em.createQuery("select c from Corpus c") ;
+			return query.getResultList();
+			}
+			catch(NoResultException exc) {
+				return null ;
+			}
+	}
+
+	@Override
+	public Corpus getCorpusByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

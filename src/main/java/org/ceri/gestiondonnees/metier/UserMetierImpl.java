@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.apache.log4j.DailyRollingFileAppender;
 import org.ceri.gestiondonnees.dao.IUsersDao;
 import org.ceri.gestiondonnees.entities.Permission;
+import org.ceri.gestiondonnees.entities.Corpus;
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
@@ -80,6 +81,9 @@ public class UserMetierImpl implements IUserMetier {
 		return null;
 	}
 
+	/* ========================================= laboratory methods =============================================
+	   ==========================================================================================================*/
+	
 	@Override
 	public void addLaboratory(Laboratory laboratory) {
 		// TODO Auto-generated method stub
@@ -88,6 +92,38 @@ public class UserMetierImpl implements IUserMetier {
 
 	@Override
 	public Laboratory getLaboratoryByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Laboratory> getAllLaboratories() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addCorpusToLaboratory(Corpus corpus, Laboratory lab) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* =========================================== corpus methods ===============================================
+	   ==========================================================================================================*/
+	@Override
+	public void addCorpus(Corpus corpus) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Collection<Corpus> getAllCorpus() {
+		// TODO Auto-generated method stub
+		return dao.getAllCorpus();
+	}
+
+	@Override
+	public Corpus getCorpusByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -27,6 +27,7 @@ public class Corpus implements Serializable
 	private int idCorpus ;
 	
 	private String name ;
+	private Long capacity ; 
 	private String description ; 
 	
 	@OneToMany(mappedBy="corpus")
@@ -56,9 +57,17 @@ public class Corpus implements Serializable
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Long getCapacity() {
+		return capacity;
+	}
+
+
+	public void setCapacity(Long capacity) {
+		this.capacity = capacity;
 	}
 
 

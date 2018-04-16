@@ -20,6 +20,10 @@
 				<label for="description">Description *</label> 
 				<f:textarea path="description" rows="5" cols="30" class="form-control" placeholder="Description du role"/>
 			</div>
+			<div class="form-group"> 
+				<label for="description">Description *</label> 
+				<f:textarea path="description" rows="5" cols="30" class="form-control" placeholder="Description du role"/>
+			</div>
 			<div>
 				<button type="reset" class="btn btn-primary mb-2">Réinitialiser</button>
 				<button type="submit" class="btn btn-primary mb-2">Ajouter Role</button>

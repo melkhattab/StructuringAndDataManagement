@@ -3,11 +3,13 @@ package org.ceri.gestiondonnees.metier;
 import java.util.Collection;
 
 import org.ceri.gestiondonnees.entities.Permission;
+import org.ceri.gestiondonnees.entities.Corpus;
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
 
 public interface IUserMetier {
+	
 	// methods concerning users  
 		public void addUser(User user);
 		public User getUserByEmail(String email);
@@ -21,15 +23,19 @@ public interface IUserMetier {
 		public Collection<Role> getAllRoles();
 		
 		// methods concerning droits 
-		
 		public void addDroit(Permission droit);
 		public Collection<Permission> getAllPermission();
 		public Permission getPermission(User user);
 		
-		
-		
-		/* Methods that manipulate Labortor */
+		/* Methods that manipulate Labortory */
 		public void addLaboratory(Laboratory laboratory);
 		public Laboratory getLaboratoryByName(String name);
+		public Collection<Laboratory> getAllLaboratories();
+		public void addCorpusToLaboratory(Corpus corpus, Laboratory lab); 
+		
+		/* Methods that manipulate corpus */
+		public void addCorpus(Corpus corpus);
+		public Collection<Corpus> getAllCorpus();
+		public Corpus getCorpusByName(String name);
 		
 }

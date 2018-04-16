@@ -29,21 +29,6 @@ public class ProcessingController {
 	@Autowired
 	private JavaMailSender mailSender ; 
 	
-	@RequestMapping(value = "/addRole", method = RequestMethod.POST)
-	public String createRole(Model model, RoleData roledata) {
-		
-		Role role = metier.getRoleByLibelle(roledata.getRole());
-		if(role == null && roledata.getRole()!=null) {
-			metier.addRole(new Role(roledata.getRole(), roledata.getDescription()));
-			return "data/home";
-		}
-		else {
-			roledata.setErrorMessage("Le laboratoire existe déjà");
-			model.addAttribute("labData",roledata) ;
-			return "forms/createRole";
-		}
-		
-	}
 	@RequestMapping(value = "/addLaboratory", method = RequestMethod.POST)
 	public String createLaboratory(Model model, LaboratoryData labData) {
 		
@@ -59,57 +44,6 @@ public class ProcessingController {
 		}
 		
 	}
-	@RequestMapping(value = "/addAccount", method = RequestMethod.POST)
-	public String createAccount(Model model, UserAccount accountDetails) {
-		// this controller add a user to database 
-		User user = metier.getUserByEmail(accountDetails.getEmail());
-		if(user == null) {
-			if(!accountDetails.getPassword().equals("") && accountDetails.getPassword().equals(accountDetails.getConfPassword())){
-				user = new User( accountDetails.getFirstName(), accountDetails.getLastName(), 
-									accountDetails.getEmail(), accountDetails.getPassword());
-		//		metier.addUser(user); 
-				sendMail("elkhattab.mahmoud@gmail.com");
-				return "data/home";
-			}
-			else{
-				model.addAttribute("errorAccount", "password incorrect") ;
-			}
-		}
-		else
-			model.addAttribute("errorAccount", "Email déjà utilisé") ;
-		return "forms/createAccount";
-	}
 	
-	@RequestMapping(value="/usersList", method = RequestMethod.GET)
-    public String usersList(Model model) {
-		Collection<User> users = metier.getAllUsers();
-		model.addAttribute("users", users);
-        return "data/usersList";
-    }
-	@RequestMapping(value="/corpusList", method = RequestMethod.GET)
-    public String corpusLis(Model model) {
-		Collection<User> users = metier.getAllUsers();
-		model.addAttribute("users", users);
-        return "data/corpusList";
-    }
-	
-	/* sending emails */
-    public void sendMail(String sendTo) {
-        // takes input from e-mail form
-                
-        String subject = "Test sending e-mail";
-        
-        StringBuilder message = new StringBuilder();
-        message.append("This is my first e-mail using javaMail with spring framework \n\t\t ");
-        message.append("Please contact us for need in the following address\n\t localhost:8080/gestiondonnes/login");
-        
-        // creates a simple e-mail object       
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(sendTo);
-        email.setSubject(subject);
-        email.setText(message.toString());
-        // sends the e-mail
-        mailSender.send(email);
-    }
 	
 }

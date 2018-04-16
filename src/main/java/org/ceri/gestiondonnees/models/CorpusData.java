@@ -5,21 +5,28 @@ import org.ceri.gestiondonnees.entities.Laboratory;
 public class CorpusData {
 	
 	private String corpusName;
-	private String Description ;
+	private String description ;
 	private String laboratory ;
 	private String errorMessage ;
-	
+	private Long capacity  ;
 	public String getCorpusName() {
 		return corpusName;
 	}
 	public void setCorpusName(String corpusName) {
 		this.corpusName = corpusName;
 	}
+	
+	public Long getCapacity() {
+		return capacity;
+	}
+	public void setCapacity(Long capacity) {
+		this.capacity = capacity;
+	}
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 	public void setDescription(String description) {
-		Description = description;
+		description = description;
 	}
 	public String getErrorMessage() {
 		return errorMessage;
