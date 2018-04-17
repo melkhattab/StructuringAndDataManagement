@@ -149,14 +149,35 @@ public class UsersDaoImpl implements IUsersDao {
 	//	query.setParameter("idUser", u.getEmail()) ;
 		return null ;
 	}
-	// methods for laboratory 
+	// ================================  methods for laboratory  ================================
 	@Override
 	public void addLaboratory(Laboratory laboratory) {
 		// TODO Auto-generated method stub
 		if(laboratory!= null)
 			em.persist(laboratory);
 	}
+	@Override
+	public Collection<Laboratory> getAllLaboratories() {
+		// TODO Auto-generated method stub
+		Query query = em.createQuery("SELECT lab from Laboratory lab") ;
+		return query.getResultList();
+	}
 
+	public boolean deleteLaboratory(int id) {
+		Laboratory lab = em.find(Laboratory.class, id);
+		try {
+			em.remove(lab);
+			em.flush();
+			em.clear();
+			return true ; 
+		}
+		catch(Exception e) {
+			return false ; 
+		}
+			
+		
+		
+	}
 	/* =========================================== corpus methods ===============================================
 	   ==========================================================================================================*/
 	

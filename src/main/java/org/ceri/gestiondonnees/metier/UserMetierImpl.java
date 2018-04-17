@@ -60,13 +60,17 @@ public class UserMetierImpl implements IUserMetier {
 	@Override
 	public Collection<Role> getAllRoles() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getAllRoles();
 	}
-
+	public boolean deleteRole(String libelle) {
+		return dao.deleteRole(libelle);
+	}
+	/* =========================================  Permission  ================================================ 
+	==========================================================================================================*/
 	@Override
-	public void addDroit(Permission droit) {
+	public void addPermission(Permission permission) {
 		// TODO Auto-generated method stub
-		dao.addDroit(droit);
+		dao.addPermission(permission);
 	}
 
 	@Override
@@ -99,9 +103,15 @@ public class UserMetierImpl implements IUserMetier {
 	@Override
 	public Collection<Laboratory> getAllLaboratories() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getAllLaboratories();
 	}
-
+	@Override
+	public boolean deleteLaboratory(int id) {
+		
+		return  dao.deleteLaboratory(id);
+				
+	}
+	
 	@Override
 	public void addCorpusToLaboratory(Corpus corpus, Laboratory lab) {
 		// TODO Auto-generated method stub

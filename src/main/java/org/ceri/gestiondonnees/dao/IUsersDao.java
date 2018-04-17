@@ -29,8 +29,10 @@ public interface IUsersDao {
 	public Collection<Permission> getAllPermission();
 	public Permission getPermission(User user);
 	
-	//methods for laboratory entity 
+	//Methods that manipulate laboratories 
 	public void addLaboratory(Laboratory laboratory);
+	public Collection<Laboratory> getAllLaboratories();
+	public boolean deleteLaboratory(int id) ; 
 	
 	/* Methods that manipulate corpus */
 	public void addCorpus(Corpus corpus);

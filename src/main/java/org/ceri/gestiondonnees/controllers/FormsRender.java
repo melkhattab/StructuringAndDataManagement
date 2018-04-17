@@ -75,12 +75,7 @@ public class FormsRender {
 	
 	
 	
-	@RequestMapping(value = "/addLab")
-	public String addLaboratoryForm(Model model) {
-		// this controller allows to create a new user account
-		model.addAttribute("labData",new LaboratoryData());
-		return "forms/createLaboratory";
-	}
+	
 	
 	
 }

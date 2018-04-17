@@ -25,15 +25,15 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Laboratoires</a>
+                    <a href="laboratories">Laboratoires</a>
                     <ul class="treeview-menu menu-open">
-                    	<li>Ajouter Labooratoire</li>
+                    	<li><a href="addLaboratory">Ajouter Labooratoire</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="roles">Roles</a>
                     <ul class="treeview-menu menu-open">
-                    	<li><a href="roles/addRole">Add role</a></li>
+                    	<li><a href="addRole">Ajouter role</a></li>
                     </ul>
                 </li>
                 <li>

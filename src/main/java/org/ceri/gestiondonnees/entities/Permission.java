@@ -14,8 +14,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Permission.findDroit", 
-			query="select d from Permission d where d.lire = :l and d.ecrire = :e and d.modifier = :m and d.supp = :s")
+	@NamedQuery(name="Permission.findPermission", 
+			query="select p from Permission p "
+					+ "where p.readPermission = :r and p.writePermission = :w ")
 })
 public class Permission implements Serializable {
 	/**
@@ -28,10 +29,10 @@ public class Permission implements Serializable {
 	@Column(name="id_permission")
 	private int idPermission ;
 	
-	private String lire ; 
-	private String ecrire ; 
-	private String modifier ; 
-	private String supp ;
+	private Boolean readPermission ; 
+	private Boolean writePermission ; 
+	private Boolean updatePermission ; 
+	private Boolean deletePermission ;
 	
 	@OneToMany(mappedBy="permission")
 	private Collection<User> users ;
@@ -41,44 +42,45 @@ public class Permission implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Permission(String read, String write, String update, String delete) {
+	public Permission(Boolean readPermission, Boolean writePermission, Boolean updatePermission,
+			Boolean deletePermission) {
 		super();
-		this.lire = read;
-		this.ecrire = write;
-		this.modifier = update;
-		this.supp = delete;
+		this.readPermission = readPermission;
+		this.writePermission = writePermission;
+		this.updatePermission = updatePermission;
+		this.deletePermission = deletePermission;
 	}
 
-	public String getLire() {
-		return lire;
+	public Boolean getReadPermission() {
+		return readPermission;
 	}
 
-	public void setLire(String lire) {
-		this.lire = lire;
+	public Boolean getWritePermission() {
+		return writePermission;
 	}
 
-	public String getEcrire() {
-		return ecrire;
+	public Boolean getUpdatePermission() {
+		return updatePermission;
 	}
 
-	public void setEcrire(String ecrire) {
-		this.ecrire = ecrire;
+	public Boolean getDeletePermission() {
+		return deletePermission;
 	}
 
-	public String getModifier() {
-		return modifier;
+	public void setReadPermission(Boolean readPermission) {
+		this.readPermission = readPermission;
 	}
 
-	public void setModifier(String modifier) {
-		this.modifier = modifier;
+	public void setWritePermission(Boolean writePermission) {
+		this.writePermission = writePermission;
 	}
 
-	public String getSupp() {
-		return supp;
+	public void setUpdatePermission(Boolean updatePermission) {
+		this.updatePermission = updatePermission;
 	}
 
-	public void setSupp(String supp) {
-		this.supp = supp;
+	public void setDeletePermission(Boolean deletePermission) {
+		this.deletePermission = deletePermission;
 	}
 
 	public boolean equals(Permission droit) {

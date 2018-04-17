@@ -21,21 +21,19 @@
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th>Role</th>
+									<th>Nom du Laboratoire</th>
 									<th>Description</th>
-									<th>Permissions</th>
-									<th>Options</th>
+									<th>Modifier/Supprimer </th>
 							   </tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${roles}" var="role">
+								<c:forEach items="${laboratories}" var="laboratory">
 									<tr>
-										<td>${role.libelle }</td>
-										<td>${role.description }</td>
-										<td>${role.libelle }</td>
+										<td>${laboratory.name }</td>
+										<td>${laboratory.description }</td>
 										<td>
-											<a href="updateRole">Modifier</a>--
-											<a href="<c:url value='deleteRole/${role.libelle}' />" >Supprimer</a>
+											<a href="updateLaboratory">Modifier</a>--
+											<a href="<c:url value='deleteLaboratory/${laboratory.name}' />" >Supprimer</a>
 										</td>
 									</tr>
 								   </c:forEach>								
@@ -48,6 +46,7 @@
 				</div>
 			</div>
 			</div>
+	
 		<!-- scripts -->
 		<script src="<%=request.getContextPath()%>/resources/js/jquery-3.3.1.min.js"></script>
 		<script src="<%=request.getContextPath()%>/resources/js/bootstrap.min.js"></script>
