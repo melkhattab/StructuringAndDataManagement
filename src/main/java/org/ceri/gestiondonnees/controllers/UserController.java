@@ -51,7 +51,7 @@ public class UserController {
 				metier.addUser(user); 
 				model.addAttribute("errorAccount", "account created") ;
 		//		sendMail("elkhattab.mahmoud@gmail.com");
-				return "data/usersList";
+				return "redirect:users";
 			}
 			else{
 				model.addAttribute("errorAccount", "password incorrect") ;
