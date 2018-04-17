@@ -21,10 +21,11 @@ public interface IUsersDao {
 	public void addRole(Role role);
 	public Role getRoleByLibelle(String libelle);
 	public Collection<Role> getAllRoles();
+	public boolean deleteRole(String libelle) ;
 	
 	// methods concerning droits 
 	
-	public void addDroit(Permission droit);
+	public void addPermission(Permission permission);
 	public Collection<Permission> getAllPermission();
 	public Permission getPermission(User user);
 	

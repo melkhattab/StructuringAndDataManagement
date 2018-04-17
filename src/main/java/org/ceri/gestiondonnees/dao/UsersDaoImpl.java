@@ -100,23 +100,36 @@ public class UsersDaoImpl implements IUsersDao {
 		Query query = em.createQuery("select r from Role r") ;
 		return query.getResultList();
 	}
+	
+	@Override
+	public boolean deleteRole(String libelle) {
+		try {
+				em.remove(em.find(Role.class, libelle));
+				em.flush(); em.clear();
+				return true ; 
+		}
+		catch(Exception e) {
+			return false ; 
+		}
+	}
 
 	/* ---------------------------  Permission  -------------------------*/
 	@Override
-	public void addDroit(Permission droit) {
+	public void addPermission(Permission permission) {
 		// TODO Auto-generated method stub
-		Query query = em.createNamedQuery("Permission.findDroit");
-		query.setParameter("l", droit.getLire());
-		query.setParameter("e", droit.getEcrire());
-		query.setParameter("m", droit.getModifier());
-		query.setParameter("s", droit.getSupp());
+		Query query = em.createNamedQuery("Permission.findPermission");
+		 
+		query.setParameter("r", permission.getReadPermission());
+		query.setParameter("w", permission.getWritePermission());
+//		query.setParameter("u", permission.isUpdate());
+//		query.setParameter("d", permission.isDelete());
 		try {
 			Permission d = (Permission) query.getSingleResult();
 			if(d != null)
-				System.out.println("Droit existe déjà");
+				System.out.println("Permission existe déjà");
 		}
 		catch(NoResultException ex) {
-			em.persist(droit);
+			em.persist(permission);
 		}
 		
 	}
