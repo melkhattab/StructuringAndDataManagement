@@ -18,6 +18,9 @@
 				</div>
 				<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10 ">
 					<div class="content">
+						<h4>
+							Bonjour! vous êtes Mr : ${userSession.firstName } ${ userSession.lastName }	(id) ${userSession.id }
+						</h4>
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -32,12 +35,15 @@
 								<c:forEach items="${allCorpus}" var="corpus">
 									<tr>
 										<td>${corpus.name }</td>
-										<td>${corpus.description }</td>
-										<td>${corpus.user.firstName }</td>
+										<td>${corpus.description }</td> 
+										<td>${corpus.name }</td> 	<!-- Assoc labs -->
 										<td> 
-											list labs
+											EL KHATTAB Mahmoud		<!-- created by -->
 										</td>
-										<td></td>
+										<td>
+											<a href="updateCorpus">Modifier</a>--
+											<a href="<c:url value='deleteCorpus/${corpus.idCorpus}' />" >Supprimer</a>
+										</td>
 									</tr>
 								   </c:forEach>								
 							</tbody>

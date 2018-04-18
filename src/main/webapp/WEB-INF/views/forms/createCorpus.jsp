@@ -22,20 +22,19 @@
 					</div>
 					<div class=" content">
 						<div class="newCorpusForm">
-							<f:form modelAttribute="corpus" method="post" action="addCorpus" >
+							<f:form modelAttribute="corpus" method="post" action="createCorpus" >
 								<div class="form-group">
 									<label for="corpusName">Nom</label> 
 									<f:input path="corpusName" class="form-control" placeholder="Nom du corpus" />
 								</div>
 								<div class="form-group"> 
-									<label for="description">Description *</label> 
+									<label for="description">Description</label> 
 									<f:textarea path="description" rows="5" cols="30" class="form-control" placeholder="Description du corpus"/>
 								</div>
 								<div class="form-group">
 									<label for="corpusCapacity">Capacité</label> 
 									<f:input path="capacity" class="form-control" placeholder="Capacité du corpus" />
 								</div>
-								
 								<div>
 									<button type="reset" class="btn btn-primary mb-2">Réinitialiser</button>
 									<button type="submit" class="btn btn-primary mb-2">Ajouter</button>

@@ -60,7 +60,7 @@ public class LaboratoryController {
 	public String deleteLaboratory(@PathVariable("id") int id, Model model) {
 		// this controller allows to create a new user account
 		metier.deleteLaboratory(id);
-		return "redirect:laboratories";
+		return "redirect:/laboratories";
 	}
 	
 	

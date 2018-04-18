@@ -26,7 +26,7 @@ public class CorpusData {
 		return description;
 	}
 	public void setDescription(String description) {
-		description = description;
+		this.description = description;
 	}
 	public String getErrorMessage() {
 		return errorMessage;
@@ -37,6 +37,7 @@ public class CorpusData {
 	public void setLabraory(String laboratory) {
 		this.laboratory = laboratory;
 	}
+	
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}

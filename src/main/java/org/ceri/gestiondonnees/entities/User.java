@@ -62,11 +62,14 @@ public class User implements Serializable
 		this.password = password;
 	}
 
+	public int getId() {
+		return this.id;
+	}
+	
 	public String getLastName() {
 		return this.lastName;
 	}
-
-
+	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}

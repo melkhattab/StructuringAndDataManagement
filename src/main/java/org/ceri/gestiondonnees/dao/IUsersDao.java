@@ -11,11 +11,12 @@ import org.ceri.gestiondonnees.entities.User;
 public interface IUsersDao {
 
 	// methods concerning users  
-	public void addUser(User user);
+	public void addUser(User user);   			//ok 
 	public User getUserByEmail(String email); 
 	public Collection<User> getAllUsers();
 	public void addPermissionToUser(Permission droit, User user) ;
 	public void addRoleToUser(Role role, User user);
+	public boolean deleteUser(int id); 
 	
 	// methods concerning roles 
 	public void addRole(Role role);
@@ -38,6 +39,6 @@ public interface IUsersDao {
 	public void addCorpus(Corpus corpus);
 	public Collection<Corpus> getAllCorpus();
 	public Corpus getCorpusByName(String name);
-	
+	public boolean deleteCorpus(int id) ;
 	
 }

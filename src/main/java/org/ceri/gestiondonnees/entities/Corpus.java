@@ -46,13 +46,18 @@ public class Corpus implements Serializable
 	}
 
 
-	public Corpus( String name,String description) {
+	public Corpus( String name,String description, Long capacity) {
 		super();
 		this.name = name ; 
 		this.description = description ; 
+		this.capacity = capacity ; 
 	}
 
 
+	public int getIdCorpus() {
+		return idCorpus;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -75,8 +80,18 @@ public class Corpus implements Serializable
 		return description;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
-	}	
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }

@@ -18,6 +18,9 @@
 				</div>
 				<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10 ">
 					<div class="content">
+						<h4>
+							Bonjour! vous êtes Mr : ${userSession.firstName } ${ userSession.lastName }	
+						</h4>
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -57,7 +60,10 @@
 											</c:choose>
 										</td>
 										<td>RWUD</td>
-										<td><a href="updateUser">Modifier</a>--<a href="deleteUser">Supprimer</a></td>
+										<td>
+											<a href="updateUser">Modifier</a>--
+											<a href="<c:url value='deleteUser/${user.id}' />" >Supprimer</a>
+										</td>
 									</tr>
 								   </c:forEach>								
 							</tbody>

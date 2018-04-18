@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.ceri.gestiondonnees.entities.Permission;
 import org.ceri.gestiondonnees.entities.Corpus;
@@ -73,12 +74,27 @@ public class UsersDaoImpl implements IUsersDao {
 			em.merge(user);
 		}
 	}
+	@Override
 	public void addRoleToUser(Role role, User user) {
 		Role r = em.find(Role.class, role.getLibelle());
 		if(r!= null) {
 			user.setRole(role);
 			em.merge(user);
 		}
+	}
+	
+	@Override
+	public boolean deleteUser(int id) {
+		try {
+			User user = em.find(User.class, id);
+			em.remove(user);
+			flushAndClear();
+			return true ; 
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false ; 
+		}
+		
 	}
 	
 	/* ------------------------------  Role   ---------------------------------------*/
@@ -105,7 +121,7 @@ public class UsersDaoImpl implements IUsersDao {
 	public boolean deleteRole(String libelle) {
 		try {
 				em.remove(em.find(Role.class, libelle));
-				em.flush(); em.clear();
+				flushAndClear();
 				return true ; 
 		}
 		catch(Exception e) {
@@ -114,6 +130,7 @@ public class UsersDaoImpl implements IUsersDao {
 	}
 
 	/* ---------------------------  Permission  -------------------------*/
+	
 	@Override
 	public void addPermission(Permission permission) {
 		// TODO Auto-generated method stub
@@ -167,8 +184,7 @@ public class UsersDaoImpl implements IUsersDao {
 		Laboratory lab = em.find(Laboratory.class, id);
 		try {
 			em.remove(lab);
-			em.flush();
-			em.clear();
+			flushAndClear();
 			return true ; 
 		}
 		catch(Exception e) {
@@ -184,13 +200,14 @@ public class UsersDaoImpl implements IUsersDao {
 	@Override
 	public void addCorpus(Corpus corpus) {
 		// TODO Auto-generated method stub
-		
+		em.persist(corpus);
+		em.flush();
 	}
 
 	@Override
 	public Collection<Corpus> getAllCorpus() {
 		try {
-			Query query = em.createQuery("select c from Corpus c") ;
+			Query query = em.createQuery("SELECT c FROM Corpus c") ;
 			return query.getResultList();
 			}
 			catch(NoResultException exc) {
@@ -201,7 +218,33 @@ public class UsersDaoImpl implements IUsersDao {
 	@Override
 	public Corpus getCorpusByName(String name) {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			Query query = em.createQuery("SELECT c FROM Corpus c.name = :n");
+			query.setParameter("n", name);
+			return (Corpus) query.getSingleResult();
+		} catch (Exception e) { 
+			// TODO: handle exception
+			return null ; 
+		}
+	}
+	@Override
+	public boolean deleteCorpus(int id) {
+		try {
+			Corpus corpus = em.find(Corpus.class, id);
+			em.remove(corpus);
+			flushAndClear();
+			return true ; 
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			return false ;
+		}
+		
+	}
+	
+	private void flushAndClear() {
+		em.flush();
+		em.clear();
 	}
 
 }

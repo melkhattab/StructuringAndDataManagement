@@ -11,15 +11,15 @@ import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+
 public class UserMetierImpl implements IUserMetier {
 	
 	private IUsersDao dao ; 
 	
 	public void setUsersDao(IUsersDao usersDao) {
 		this.dao = usersDao;
-	}
-	
+	} 
+	@Transactional
 	@Override
 	public void addUser(User user) {
 		// TODO Auto-generated method stub
@@ -41,11 +41,18 @@ public class UserMetierImpl implements IUserMetier {
 	public void addPermissionToUser(Permission droit, User user) {
 		dao.addPermissionToUser(droit,user);
 	}
+	@Override
 	public void addRoleToUser(Role role, User user) {
 		dao.addRoleToUser(role, user);
 	}
+	@Override
+	@Transactional
+	public boolean deleteUser(int id) {
+		return dao.deleteUser(id) ; 
+	}
 	/* -----------------  Role functionalities  ----------------- */
 	@Override
+	@Transactional
 	public void addRole(Role role) {
 		// TODO Auto-generated method stub
 		dao.addRole(role);
@@ -62,12 +69,15 @@ public class UserMetierImpl implements IUserMetier {
 		// TODO Auto-generated method stub
 		return dao.getAllRoles();
 	}
+	@Override
+	@Transactional
 	public boolean deleteRole(String libelle) {
 		return dao.deleteRole(libelle);
 	}
 	/* =========================================  Permission  ================================================ 
 	==========================================================================================================*/
 	@Override
+	@Transactional
 	public void addPermission(Permission permission) {
 		// TODO Auto-generated method stub
 		dao.addPermission(permission);
@@ -89,6 +99,7 @@ public class UserMetierImpl implements IUserMetier {
 	   ==========================================================================================================*/
 	
 	@Override
+	@Transactional
 	public void addLaboratory(Laboratory laboratory) {
 		// TODO Auto-generated method stub
 		dao.addLaboratory(laboratory);
@@ -106,6 +117,7 @@ public class UserMetierImpl implements IUserMetier {
 		return dao.getAllLaboratories();
 	}
 	@Override
+	@Transactional
 	public boolean deleteLaboratory(int id) {
 		
 		return  dao.deleteLaboratory(id);
@@ -113,6 +125,7 @@ public class UserMetierImpl implements IUserMetier {
 	}
 	
 	@Override
+	@Transactional
 	public void addCorpusToLaboratory(Corpus corpus, Laboratory lab) {
 		// TODO Auto-generated method stub
 		
@@ -121,9 +134,10 @@ public class UserMetierImpl implements IUserMetier {
 	/* =========================================== corpus methods ===============================================
 	   ==========================================================================================================*/
 	@Override
+	@Transactional
 	public void addCorpus(Corpus corpus) {
 		// TODO Auto-generated method stub
-		
+		dao.addCorpus(corpus);
 	}
 
 	@Override
@@ -135,7 +149,13 @@ public class UserMetierImpl implements IUserMetier {
 	@Override
 	public Corpus getCorpusByName(String name) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getCorpusByName(name);
+	}
+	@Override
+	@Transactional
+	public boolean deleteCorpus(int id) {
+		// TODO Auto-generated method stub
+		return dao.deleteCorpus(id);
 	}
 	
 	

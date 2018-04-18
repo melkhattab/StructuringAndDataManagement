@@ -65,7 +65,6 @@ public class RoleController {
 	}
 	@RequestMapping(value = "deleteRole/{libelle}", method = RequestMethod.GET)
 	public String deleteRole(@PathVariable("libelle") String libelle, Model model) {
-		System.out.println("hhhhh "+libelle);
 		
 		if( metier.deleteRole(libelle)) {
 			model.addAttribute("deleteResult", "success");

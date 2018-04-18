@@ -27,7 +27,7 @@ public class Laboratory implements Serializable
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_laborator")
-	private int idLaborator ; 
+	private int idLaboratory ; 
 	private String name ;
 	private String description ; 
 	
@@ -42,34 +42,31 @@ public class Laboratory implements Serializable
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
+	
 	public Laboratory( String name,String description) {
 		super();
 		this.name = name ; 
 		this.description = description ; 
 	}
-
+	
+	public int getIdLaboratory() {
+		return idLaboratory;
+	}
 
 	public String getName() {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 	public String getDescription() {
 		return description;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
 	
 }

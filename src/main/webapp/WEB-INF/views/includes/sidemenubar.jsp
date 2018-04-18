@@ -21,7 +21,7 @@
                 <li class="treeview active">
                     <a href="corpus">Corpus</a>
                     <ul class="treeview-menu menu-open">
-                    	<li><a href="createCorpus">Ajouter corpus</a></li>
+                    	<li><a href="addCorpus">Ajouter corpus</a></li>
                     </ul>
                 </li>
                 <li>

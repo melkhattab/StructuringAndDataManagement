@@ -16,6 +16,7 @@ public interface IUserMetier {
 		public Collection<User> getAllUsers();
 		public void addPermissionToUser(Permission droit, User user);
 		public void addRoleToUser(Role role, User user);
+		public boolean deleteUser(int id); 
 		
 		// =========================== methods concerning roles ===========================
 		public void addRole(Role role);
@@ -40,5 +41,6 @@ public interface IUserMetier {
 		public void addCorpus(Corpus corpus);
 		public Collection<Corpus> getAllCorpus();
 		public Corpus getCorpusByName(String name);
+		public boolean deleteCorpus(int id); 
 		
 }
