@@ -39,10 +39,8 @@ public class UserController {
 	public String createAccountForm(Model model){
 		// this controller allows to create a new user account
 		UserAccount userAccount = new UserAccount();
-		List<Laboratory> labs = new ArrayList<Laboratory>();
-		labs.add(new Laboratory("LIA", ""));
-		labs.add(new Laboratory("LHA", ""));
-		
+		Collection<Laboratory> labs = metier.getAllLaboratories();
+		userAccount.setLaboratories(labs);
 		model.addAttribute("userAccount",userAccount);
 		return "forms/createAccount";
 	}
@@ -55,6 +53,8 @@ public class UserController {
 			if(!accountDetails.getPassword().equals("") && accountDetails.getPassword().equals(accountDetails.getConfPassword())){
 				user = new User( accountDetails.getFirstName(), accountDetails.getLastName(), 
 									accountDetails.getEmail(), accountDetails.getPassword());
+				Laboratory lab = metier.getLaboratoryByName(accountDetails.getSelectedLab());
+				user.setLaboratory(lab);
 				metier.addUser(user); 
 				model.addAttribute("errorAccount", "account created") ;
 		//		sendMail("elkhattab.mahmoud@gmail.com");
@@ -75,9 +75,7 @@ public class UserController {
 	}
 	/* sending emails */
     public void sendMail(String sendTo) {
-        
     	// takes input from e-mail form
-                
         String subject = "Test sending e-mail";
         
         StringBuilder message = new StringBuilder();

@@ -179,7 +179,7 @@ public class UsersDaoImpl implements IUsersDao {
 		Query query = em.createQuery("SELECT lab from Laboratory lab") ;
 		return query.getResultList();
 	}
-
+	@Override
 	public boolean deleteLaboratory(int id) {
 		Laboratory lab = em.find(Laboratory.class, id);
 		try {
@@ -190,9 +190,12 @@ public class UsersDaoImpl implements IUsersDao {
 		catch(Exception e) {
 			return false ; 
 		}
-			
-		
-		
+	}
+	@Override
+	public Laboratory getLaboratoryByName(String name) {
+		Query query = em.createQuery("SELECT l FROM l WHERE l.name = :name");
+		query.setParameter("name", name);
+		return (Laboratory) query.getSingleResult();
 	}
 	/* =========================================== corpus methods ===============================================
 	   ==========================================================================================================*/

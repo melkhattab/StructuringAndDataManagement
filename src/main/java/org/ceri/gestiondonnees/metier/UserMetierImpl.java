@@ -108,7 +108,7 @@ public class UserMetierImpl implements IUserMetier {
 	@Override
 	public Laboratory getLaboratoryByName(String name) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getLaboratoryByName(name);
 	}
 
 	@Override

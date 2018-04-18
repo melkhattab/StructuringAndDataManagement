@@ -1,5 +1,6 @@
 package org.ceri.gestiondonnees.models;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.ceri.gestiondonnees.entities.Laboratory;
@@ -11,8 +12,16 @@ public class UserAccount {
 	private String email ; 
 	private String password ; 
 	private String confPassword ;
-	private String laboratories ;
+	private Collection<Laboratory> laboratories ;
+	private String selectedLab ; 
 	
+	
+	public String getSelectedLab() {
+		return selectedLab;
+	}
+	public void setSelectedLab(String selectedLab) {
+		this.selectedLab = selectedLab;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -43,10 +52,10 @@ public class UserAccount {
 	public void setConfPassword(String confPassword) {
 		this.confPassword = confPassword;
 	}
-	public String getLaboratories() {
+	public Collection<Laboratory> getLaboratories() {
 		return laboratories;
 	}
-	public void setLaboratories(String laboratories) {
+	public void setLaboratories(Collection<Laboratory> laboratories) {
 		this.laboratories = laboratories;
 	}
 	

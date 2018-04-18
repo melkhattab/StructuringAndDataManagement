@@ -33,12 +33,11 @@
 										<f:input path="lastName" class="form-control" placeholder="Insérez votre nom"/>
 									</div>
 									<div class="form-group"> 
-										<label for="laboratory">Laboratoire *</label>
-										<f:select multiple="false" path="laboratories" class="form-control">
-											<f:option value="NONE" label="--- Select ---" selected="true" />
-									   		<f:option value="LIA" />
-									   		<f:option value="LHA" />
-									   		<f:option value="LMA" />
+										<label for="laboratory">Laboratoire *</label>									   		
+										<f:select multiple="false" path="selectedLab" class="form-control">
+									   		<c:forEach items="${userAccount.laboratories}" var="laboratory">
+											   <f:option value="${laboratory.name}" />
+											</c:forEach>
 										</f:select>
 									</div>
 									<div class="form-group">

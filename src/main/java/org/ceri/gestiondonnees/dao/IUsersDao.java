@@ -32,8 +32,10 @@ public interface IUsersDao {
 	
 	//Methods that manipulate laboratories 
 	public void addLaboratory(Laboratory laboratory);
+	public Laboratory getLaboratoryByName(String name);
 	public Collection<Laboratory> getAllLaboratories();
 	public boolean deleteLaboratory(int id) ; 
+	
 	
 	/* Methods that manipulate corpus */
 	public void addCorpus(Corpus corpus);
