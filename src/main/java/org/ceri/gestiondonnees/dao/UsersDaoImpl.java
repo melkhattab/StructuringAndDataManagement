@@ -1,16 +1,11 @@
 package org.ceri.gestiondonnees.dao;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
-
 import org.ceri.gestiondonnees.entities.Permission;
 import org.ceri.gestiondonnees.entities.Corpus;
 import org.ceri.gestiondonnees.entities.Laboratory;
@@ -193,7 +188,7 @@ public class UsersDaoImpl implements IUsersDao {
 	}
 	@Override
 	public Laboratory getLaboratoryByName(String name) {
-		Query query = em.createQuery("SELECT l FROM l WHERE l.name = :name");
+		Query query = em.createQuery("SELECT l FROM Laboratory l WHERE l.name = :name");
 		query.setParameter("name", name);
 		return (Laboratory) query.getSingleResult();
 	}
