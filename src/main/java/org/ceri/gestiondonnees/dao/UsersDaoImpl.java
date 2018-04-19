@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.ceri.gestiondonnees.entities.Permission;
 import org.ceri.gestiondonnees.entities.Corpus;
+import org.ceri.gestiondonnees.entities.File;
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
@@ -239,10 +240,17 @@ public class UsersDaoImpl implements IUsersDao {
 		}
 		
 	}
+	@Override
+	public Collection<File> getAllFiles(){
+		Query query = em.createQuery("SELECT f FROM File f");
+		return query.getResultList();
+	}
 	
 	private void flushAndClear() {
 		em.flush();
 		em.clear();
 	}
+	
+	
 
 }

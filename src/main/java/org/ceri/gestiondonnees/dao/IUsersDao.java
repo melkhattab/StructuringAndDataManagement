@@ -4,9 +4,11 @@ import java.util.Collection;
 
 import org.ceri.gestiondonnees.entities.Permission;
 import org.ceri.gestiondonnees.entities.Corpus;
+import org.ceri.gestiondonnees.entities.File;
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
+
 
 public interface IUsersDao {
 
@@ -42,5 +44,8 @@ public interface IUsersDao {
 	public Collection<Corpus> getAllCorpus();
 	public Corpus getCorpusByName(String name);
 	public boolean deleteCorpus(int id) ;
+	
+	// =========================== methods concerning files ===========================
+	public Collection<File> getAllFiles();
 	
 }

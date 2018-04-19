@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpSession;
 
 import org.ceri.gestiondonnees.entities.Corpus;
+import org.ceri.gestiondonnees.entities.File;
 import org.ceri.gestiondonnees.entities.User;
 import org.ceri.gestiondonnees.metier.IUserMetier;
 import org.ceri.gestiondonnees.models.CorpusData;
@@ -18,26 +19,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class CorpusController {
+public class FileController {
 
 	@Autowired
 	private IUserMetier metier ;
-
-	@RequestMapping(value="corpus", method = RequestMethod.GET)
+	
+	@RequestMapping(value="files", method = RequestMethod.GET)
     public String displayAllCorpusList(Model model) {
-		Collection<Corpus> allCorpus = metier.getAllCorpus();
-		model.addAttribute("allCorpus", allCorpus);
-        return "data/corpus";
+		Collection<File> files = metier.getAllFiles();
+		model.addAttribute("files", files);
+        return "data/files";
     }
 	
-	@RequestMapping(value = "addCorpus", method = RequestMethod.GET)
+	@RequestMapping(value = "uploadFile", method = RequestMethod.GET)
 	public String addCorpusToDB(Model model) {
 		// this controller allows to create a new user account
 		model.addAttribute("corpus",new CorpusData());
 		return "forms/createCorpus";
 	}
 	
-	@RequestMapping(value = "createCorpus", method = RequestMethod.POST)
+	@RequestMapping(value = "addFile", method = RequestMethod.POST)
 	public String displayCorpusForm(Model model, CorpusData corpusInf, HttpSession session) {
 		// this controller allows to create a new user account
 		Corpus corpus =  new Corpus(corpusInf.getCorpusName(), corpusInf.getDescription(), corpusInf.getCapacity()) ; 
@@ -47,7 +48,7 @@ public class CorpusController {
 		return "redirect:corpus";
 	}
 	
-	@RequestMapping(value = "deleteCorpus/{id}")
+	@RequestMapping(value = "deleteFile/{id}")
 	public String deleteCorpus(@PathVariable("id") int id, Model model) {
 		// this controller allows to create a new user account
 		metier.deleteCorpus(id) ; 

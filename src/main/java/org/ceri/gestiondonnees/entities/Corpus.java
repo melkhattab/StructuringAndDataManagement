@@ -37,8 +37,8 @@ public class Corpus implements Serializable
 	private Collection<File> files ;
 	
 	@ManyToOne
-	@JoinColumn(name="id_user")
-	private User user ;
+	@JoinColumn(name="creator")
+	private User creator ;
 	
 	public Corpus() {
 		super();
@@ -85,13 +85,13 @@ public class Corpus implements Serializable
 	}
 
 
-	public User getUser() {
-		return user;
+	public User getCreator() {
+		return creator;
 	}
 
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 	
 }

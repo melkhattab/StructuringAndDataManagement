@@ -1,15 +1,9 @@
 package org.ceri.gestiondonnees.controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
-import org.ceri.gestiondonnees.entities.Corpus;
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.User;
 import org.ceri.gestiondonnees.metier.IUserMetier;
-import org.ceri.gestiondonnees.models.CorpusData;
-import org.ceri.gestiondonnees.models.LaboratoryData;
 import org.ceri.gestiondonnees.models.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -24,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 
 	@Autowired
-	private IUserMetier metier ;
+	private IUserMetier metier ; 
 	
 	@Autowired
 	private JavaMailSender mailSender ;
@@ -35,6 +29,7 @@ public class UserController {
 		model.addAttribute("users", users);
         return "data/usersList";
     }
+	
 	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
 	public String createAccountForm(Model model){
 		// this controller allows to create a new user account
@@ -57,8 +52,9 @@ public class UserController {
 				user.setLaboratory(lab);
 				metier.addUser(user); 
 				model.addAttribute("errorAccount", "account created") ;
-		//		sendMail("elkhattab.mahmoud@gmail.com");
+				//sendMail("elkhattab.mahmoud@gmail.com");
 				return "redirect:users";
+				
 			}
 			else{
 				model.addAttribute("errorAccount", "password incorrect") ;
@@ -68,6 +64,7 @@ public class UserController {
 			model.addAttribute("errorAccount", "Email déjà utilisé") ;
 		return "forms/createAccount";
 	}
+	
 	@RequestMapping(value = "deleteUser/{id}", method = RequestMethod.GET)
 	public String deleteRole(@PathVariable("id") int id, Model model) {
 		metier.deleteUser(id) ; 
@@ -81,7 +78,7 @@ public class UserController {
         StringBuilder message = new StringBuilder();
         message.append("This is my first e-mail using javaMail with spring framework \n\t\t ");
         message.append("Please contact us for need in the following address\n\t localhost:8080/gestiondonnes/login");
-        
+ 
         // creates a simple e-mail object 
         
         SimpleMailMessage email = new SimpleMailMessage();
