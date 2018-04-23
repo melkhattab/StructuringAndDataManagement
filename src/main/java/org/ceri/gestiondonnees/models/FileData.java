@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.ceri.gestiondonnees.entities.Corpus;
 import org.ceri.gestiondonnees.entities.User;
+import org.springframework.web.multipart.MultipartFile;
 
 public class FileData {
 	
@@ -14,6 +15,7 @@ public class FileData {
 	private User owner ;
 	private Collection<Corpus> corpus ;
 	private String selectedCorpus ;
+	private MultipartFile file ; 
 	private String errorMessage ; 
 	
 	public String getFileName() {
@@ -59,6 +61,13 @@ public class FileData {
 	}
 	public void setSelectedCorpus(String selectedCorpus) {
 		this.selectedCorpus = selectedCorpus;
+	}
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 	public String getErrorMessage() {
 		return errorMessage;

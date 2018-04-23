@@ -38,18 +38,15 @@ public class FileController {
 	@RequestMapping(value = "uploadFile", method = RequestMethod.GET)
 	public String addCorpusToDB(Model model) {
 		// this controller allows to create a new user account
-		model.addAttribute("corpus",new CorpusData());
-		return "forms/createCorpus";
+		model.addAttribute("fileData",new FileData());
+		return "forms/uploadFile";
 	}
 	
 	@RequestMapping(value = "addFile", method = RequestMethod.POST)
-	public String displayCorpusForm(Model model, CorpusData corpusInf, HttpSession session) {
+	public String displayCorpusForm(Model model, FileData fileInf, HttpSession session) {
 		// this controller allows to create a new user account
-		Corpus corpus =  new Corpus(corpusInf.getCorpusName(), corpusInf.getDescription(), corpusInf.getCapacity()) ; 
-		User creator = (User)session.getAttribute("userSession");
-		corpus.setCreator(creator);
-		metier.addCorpus(corpus);
-		return "redirect:corpus";
+		System.out.println("le fichier est : "+fileInf.getFile().getName());
+		return "redirect:files";
 	}
 	
 	@RequestMapping(value = "deleteFile/{id}")

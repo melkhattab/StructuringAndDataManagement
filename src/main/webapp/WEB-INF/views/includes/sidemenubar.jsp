@@ -15,7 +15,7 @@
                 <li>
                     <a href="files">Documents</a>
                     <ul class="treeview-menu menu-open">
-                    	<li><a href="addFile">Ajouter document</a></li>
+                    	<li><a href="uploadFile">Ajouter document</a></li>
                     </ul>
                 </li>
                 <li>
