@@ -13,6 +13,12 @@
                     <a href="#">Dashboard</a>
                 </li>
                 <li>
+                    <a href="files">Documents</a>
+                    <ul class="treeview-menu menu-open">
+                    	<li><a href="addFile">Ajouter document</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a href="users">Utilisateurs</a>
                     <ul class="treeview-menu menu-open">
                     	<li><a href="createAccount">Ajouter utilisateur</a></li>
@@ -35,9 +41,6 @@
                     <ul class="treeview-menu menu-open">
                     	<li><a href="addRole">Ajouter role</a></li>
                     </ul>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
                 </li>
             </ul>
         </div>

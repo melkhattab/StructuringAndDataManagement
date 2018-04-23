@@ -9,6 +9,7 @@ import org.ceri.gestiondonnees.entities.File;
 import org.ceri.gestiondonnees.entities.User;
 import org.ceri.gestiondonnees.metier.IUserMetier;
 import org.ceri.gestiondonnees.models.CorpusData;
+import org.ceri.gestiondonnees.models.FileData;
 import org.ceri.gestiondonnees.models.LaboratoryData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -28,6 +29,9 @@ public class FileController {
     public String displayAllCorpusList(Model model) {
 		Collection<File> files = metier.getAllFiles();
 		model.addAttribute("files", files);
+		FileData fileData = new FileData() ; 
+		fileData.setCorpus(metier.getAllCorpus());
+		model.addAttribute("fileData", fileData );
         return "data/files";
     }
 	
