@@ -21,7 +21,7 @@
 						<h4>
 							Bonjour! vous êtes Mr : ${userSession.firstName } ${ userSession.lastName }	(id) ${userSession.id }
 						</h4>
-						<f:form modelAttribute="fileData" method="post" action="addFile" >
+						<f:form modelAttribute="fileData" method="post" action="getFiles" >
 							<div class="box-body">
 								<div class="form-group">
 									<f:input path="fileName" class="form-control" placeholder="Insérez nom du fichier " />

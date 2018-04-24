@@ -46,5 +46,6 @@ public interface IUserMetier {
 		
 		// =========================== methods concerning files ===========================
 		public Collection<File> getAllFiles();
+		public Collection<File> getFilesByName(String name);
 		
 }

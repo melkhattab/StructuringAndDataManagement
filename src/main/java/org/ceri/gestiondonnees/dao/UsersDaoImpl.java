@@ -240,9 +240,17 @@ public class UsersDaoImpl implements IUsersDao {
 		}
 		
 	}
+	
 	@Override
 	public Collection<File> getAllFiles(){
 		Query query = em.createQuery("SELECT f FROM File f");
+		return query.getResultList();
+	}
+	
+	@Override
+	public Collection<File> getFilesByName(String name){
+		Query query = em.createQuery("SELECT f FROM File f WHERE f.name like :name");
+		query.setParameter("name", "%"+name+"%");
 		return query.getResultList();
 	}
 	

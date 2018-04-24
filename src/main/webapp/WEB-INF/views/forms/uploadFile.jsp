@@ -21,11 +21,28 @@
 						<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Hide menu</a>
 					</div>
 					<div class=" content">
-							<f:form modelAttribute="fileData" enctype="multipart/form-data" method="post" action="addFile" >
+							
+							<f:form modelAttribute="fileData" method="POST" action="addFile" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
-										<label for="filetName">Fichier</label> 
-										<f:input type="file" path="file" class="form-control" placeholder="Insérez nom du fichier" />
+										<label for="fileName"> </label> 
+										<input type="text" name="name" class="form-control" placeholder="Titre..." >
+									</div>
+									<div class="form-group">
+										<label for="fileName"></label> 
+										<input type="text" name="name" class="form-control" placeholder="Auteur " >
+									</div>
+									<div class="form-group">
+										<label for="fileName"></label> 
+										<input type="text" name="name" class="form-control" placeholder="Date..." >
+									</div>
+									<div class="form-group">
+										<label for="fileName"></label> 
+										<input type="text" name="name" class="form-control" placeholder="Nombre de pages..." >
+									</div>
+									<div class="form-group">
+										<label for="fileName"></label> 
+										<input type="file" name="file" class="form-control" placeholder="selectionnez le document">
 									</div>
 									<div class="form-group">
 										<button type="submit" class="btn btn-primary mb-2">Ajouter</button>

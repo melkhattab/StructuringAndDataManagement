@@ -1,7 +1,9 @@
 package org.ceri.gestiondonnees.controllers;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 import org.exist.util.FileUtils;
 import org.exist.xmldb.XmldbURI;
@@ -104,5 +106,14 @@ public class FileInExistDB {
 		}catch(Exception e ) {
 			System.out.println("Error : "+e.getMessage());
 		}
+	}
+	/**
+	 * This methods create the xml metadata file associated for a file uploaded on the server.
+	 * @param tags : represents the Map of the pair (tagName - tagValue) of the xml file 
+	 * @return : the created xml file.
+	 */
+	
+	public File createXMLMetadataFile(Map<String, String> tags) {
+		return null ; 
 	}
 }

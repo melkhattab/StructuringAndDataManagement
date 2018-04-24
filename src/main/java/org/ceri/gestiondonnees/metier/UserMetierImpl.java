@@ -159,8 +159,14 @@ public class UserMetierImpl implements IUserMetier {
 		return dao.deleteCorpus(id);
 	}
 	// =========================== methods concerning files ===========================
+	@Override
 	public Collection<File> getAllFiles(){
 		return dao.getAllFiles();
+	}
+	
+	@Override
+	public Collection<File> getFilesByName(String name){
+		return dao.getFilesByName(name);
 	}
 
 }
