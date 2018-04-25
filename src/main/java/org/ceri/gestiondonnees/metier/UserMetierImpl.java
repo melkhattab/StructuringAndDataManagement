@@ -160,6 +160,11 @@ public class UserMetierImpl implements IUserMetier {
 	}
 	// =========================== methods concerning files ===========================
 	@Override
+	@Transactional
+	public void addFile(File file) {
+		dao.addFile(file) ;
+	}
+	@Override
 	public Collection<File> getAllFiles(){
 		return dao.getAllFiles();
 	}

@@ -213,7 +213,7 @@ public class UsersDaoImpl implements IUsersDao {
 				return null ;
 			}
 	}
-
+	
 	@Override
 	public Corpus getCorpusByName(String name) {
 		// TODO Auto-generated method stub
@@ -239,6 +239,14 @@ public class UsersDaoImpl implements IUsersDao {
 			return false ;
 		}
 		
+	}
+	/* =========================================== file methods ===============================================
+	   ==========================================================================================================*/
+	@Override
+	public void addFile(File file) {
+		// TODO Auto-generated method stub
+		em.persist(file);
+		em.flush();
 	}
 	
 	@Override

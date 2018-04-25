@@ -46,6 +46,7 @@ public interface IUsersDao {
 	public boolean deleteCorpus(int id) ;
 	
 	// =========================== methods concerning files ===========================
+	public void addFile(File file);
 	public Collection<File> getAllFiles();
 	public Collection<File> getFilesByName(String name);
 	

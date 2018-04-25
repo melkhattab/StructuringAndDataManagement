@@ -5,6 +5,15 @@ import java.io.FileOutputStream;
 import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.*;
 import org.apache.commons.io.FilenameUtils;
@@ -26,6 +35,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 @Controller
 public class FileController {
@@ -64,17 +76,16 @@ public class FileController {
 		metier.deleteCorpus(id) ; 
 		return "redirect:/corpus";
 	}	
-	
-	private static final Logger logger = LoggerFactory.getLogger(FileController.class)  ; 
-			
-	
+		
 	/**
-	 * Upload single file using Spring Controller
+	 * 
+	 * @param name
+	 * @param file
+	 * @return
 	 */
 	@RequestMapping(value = "/addFile", method = RequestMethod.POST)
-	public  String uploadFileHandler(@RequestParam("name") String name,
-			@RequestParam("file") MultipartFile file) {
-
+	public  String uploadFileHandler(@RequestParam("file") MultipartFile file) {
+		
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
@@ -84,23 +95,97 @@ public class FileController {
 				java.io.File dir = new java.io.File(rootPath + "/documents");
 				if (!dir.exists())
 					dir.mkdirs();
+				
 				// Create the file on server
-				String path = dir.getAbsolutePath()
-						+ "/"+ file.getOriginalFilename();
+				String path = dir.getAbsolutePath()+ "/"+ file.getOriginalFilename();
 				java.io.File serverFile = new java.io.File(path);
 				BufferedOutputStream stream = new BufferedOutputStream(
 						new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
-				System.out.println(FilenameUtils.getBaseName(file.getOriginalFilename()+":::"+file.getOriginalFilename()));
-				File document = new File(file.getOriginalFilename(), path, FilenameUtils.getBaseName(file.getOriginalFilename()), file.getSize());
+				
+				addFileToDataBase(file);
+			//	createXmlMetadata(fileData);
+				createXmlMetadata(new FileData());
 				return "redirect:files" ;
-			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
+			} catch (Exception e) {				
+				e.printStackTrace();				
 			}
 		} 
 		
 		return "redirect:files" ;
+	}
+	
+	private void addFileToDataBase(MultipartFile file) {
+		String name   = FilenameUtils.getBaseName(file.getOriginalFilename());
+		String path   = file.getOriginalFilename();
+		Long size   = file.getSize();
+		String fileType = FilenameUtils.getExtension(file.getOriginalFilename());
+		File document = new File(name, path, fileType , size);
+		metier.addFile(document);
+	}
+	
+	private String createXmlMetadata(FileData fileData) {
 		
+		try {
+			
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			
+			// root elements
+			Document doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement("Document");
+			doc.appendChild(rootElement);
+			
+			Element title = doc.createElement("title");
+			title.appendChild(doc.createTextNode(fileData.getTitle()));
+			rootElement.appendChild(title);
+			
+			
+			Element author = doc.createElement("author");
+			title.appendChild(doc.createTextNode(fileData.getAuthor()));
+			rootElement.appendChild(author);
+			
+			Element description = doc.createElement("description");
+			title.appendChild(doc.createTextNode(fileData.getDescription()));
+			rootElement.appendChild(description);
+			
+			Element nbrPages = doc.createElement("pages");
+			title.appendChild(doc.createTextNode(fileData.getNbr()));
+			rootElement.appendChild(nbrPages);
+			
+			Element date = doc.createElement("date");
+			title.appendChild(doc.createTextNode(fileData.getDate()));
+			rootElement.appendChild(date);
+			
+			// set attribute to staff element
+			/*
+			Attr attr = doc.createAttribute("id");
+			attr.setValue("1");
+			staff.setAttributeNode(attr);
+			*/
+			
+			// write the content into xml file
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+		//	StreamResult result = new StreamResult(new java.io.File("C:\\file.xml"));
+
+			// Output to console for testing
+			 StreamResult result = new StreamResult(System.out);
+
+			transformer.transform(source, result);
+
+			System.out.println("File saved!");
+			
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "";
 	}
 }
