@@ -1,6 +1,7 @@
 package org.ceri.gestiondonnees.dao;
 
 import java.util.Collection;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -12,6 +13,7 @@ import org.ceri.gestiondonnees.entities.File;
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.Role;
 import org.ceri.gestiondonnees.entities.User;
+import org.springframework.transaction.annotation.Transactional;
 
 public class UsersDaoImpl implements IUsersDao {
 
@@ -208,20 +210,20 @@ public class UsersDaoImpl implements IUsersDao {
 		try {
 			Query query = em.createQuery("SELECT c FROM Corpus c") ;
 			return query.getResultList();
-			}
-			catch(NoResultException exc) {
-				return null ;
-			}
+		}
+		catch(NoResultException ex) {
+			return null ;
+		}
 	}
 	
 	@Override
 	public Corpus getCorpusByName(String name) {
 		// TODO Auto-generated method stub
 		try {
-			Query query = em.createQuery("SELECT c FROM Corpus c.name = :n");
+			Query query = em.createQuery("SELECT c FROM Corpus c WHERE c.name = :n");
 			query.setParameter("n", name);
 			return (Corpus) query.getSingleResult();
-		} catch (Exception e) { 
+		} catch (NoResultException e) { 
 			// TODO: handle exception
 			return null ; 
 		}
@@ -256,12 +258,34 @@ public class UsersDaoImpl implements IUsersDao {
 	}
 	
 	@Override
+	public File getFileByName(String name){
+		try {
+			Query query = em.createQuery("SELECT f FROM File f WHERE f.name = :name");
+			query.setParameter("name",name);
+			return (File) query.getSingleResult();
+		}catch(NoResultException ex) {
+			return null ; 
+		}
+	}
+	@Override
 	public Collection<File> getFilesByName(String name){
 		Query query = em.createQuery("SELECT f FROM File f WHERE f.name like :name");
 		query.setParameter("name", "%"+name+"%");
 		return query.getResultList();
 	}
-	
+	@Override
+	public boolean deleteFile(int id) {
+		try {
+			File file = em.find(File.class, id);
+			em.remove(file);
+			flushAndClear();
+			return true ; 
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			return false ;
+		}
+	}
 	private void flushAndClear() {
 		em.flush();
 		em.clear();

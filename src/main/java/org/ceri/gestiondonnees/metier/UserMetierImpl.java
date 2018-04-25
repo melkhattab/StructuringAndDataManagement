@@ -170,8 +170,18 @@ public class UserMetierImpl implements IUserMetier {
 	}
 	
 	@Override
+	public File getFileByName(String name){
+		return dao.getFileByName(name);
+	}
+	
+	@Override
 	public Collection<File> getFilesByName(String name){
 		return dao.getFilesByName(name);
+	}
+	@Override
+	@Transactional
+	public boolean deleteFile(int id) {
+		return dao.deleteFile(id); 
 	}
 
 }

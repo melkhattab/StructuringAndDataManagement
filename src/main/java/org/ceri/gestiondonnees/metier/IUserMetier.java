@@ -47,6 +47,8 @@ public interface IUserMetier {
 		// =========================== methods concerning files ===========================
 		public void addFile(File file);
 		public Collection<File> getAllFiles();
+		public File getFileByName(String name);
 		public Collection<File> getFilesByName(String name);
+		public boolean deleteFile(int id);
 		
 }

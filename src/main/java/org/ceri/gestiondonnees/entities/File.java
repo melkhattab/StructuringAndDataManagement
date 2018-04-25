@@ -47,6 +47,10 @@ public class File implements Serializable
 		this.size = size;
 	}
 
+	public int getIdFile() {
+		return idFile;
+	}
+	
 	public String getName() {
 		return name;
 	}

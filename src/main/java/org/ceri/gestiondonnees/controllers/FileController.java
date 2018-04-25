@@ -65,7 +65,9 @@ public class FileController {
 	@RequestMapping(value = "uploadFile", method = RequestMethod.GET)
 	public String addCorpusToDB(Model model) {
 		// this controller allows to create a new user account
-		model.addAttribute("fileData",new FileData());
+		FileData fileData = new FileData() ; 
+		fileData.setCorpus(metier.getAllCorpus());
+		model.addAttribute("fileData",fileData);
 		return "forms/uploadFile";
 	}
 	
@@ -73,8 +75,8 @@ public class FileController {
 	@RequestMapping(value = "deleteFile/{id}")
 	public String deleteCorpus(@PathVariable("id") int id, Model model) {
 		// this controller allows to create a new user account
-		metier.deleteCorpus(id) ; 
-		return "redirect:/corpus";
+		metier.deleteFile(id) ; 
+		return "redirect:/files";
 	}	
 		
 	/**
@@ -84,7 +86,7 @@ public class FileController {
 	 * @return
 	 */
 	@RequestMapping(value = "/addFile", method = RequestMethod.POST)
-	public  String uploadFileHandler(@RequestParam("file") MultipartFile file) {
+	public  String uploadFileHandler(Model model, @RequestParam("file") MultipartFile file, FileData fileData) {
 		
 		if (!file.isEmpty()) {
 			try {
@@ -104,9 +106,10 @@ public class FileController {
 				stream.write(bytes);
 				stream.close();
 				
-				addFileToDataBase(file);
+				String result = addFileToDataBase(file, fileData);
 			//	createXmlMetadata(fileData);
 				createXmlMetadata(new FileData());
+				model.addAttribute("result", "abcde");
 				return "redirect:files" ;
 			} catch (Exception e) {				
 				e.printStackTrace();				
@@ -116,13 +119,22 @@ public class FileController {
 		return "redirect:files" ;
 	}
 	
-	private void addFileToDataBase(MultipartFile file) {
+	private String addFileToDataBase(MultipartFile file, FileData fileData) {
 		String name   = FilenameUtils.getBaseName(file.getOriginalFilename());
 		String path   = file.getOriginalFilename();
 		Long size   = file.getSize();
 		String fileType = FilenameUtils.getExtension(file.getOriginalFilename());
-		File document = new File(name, path, fileType , size);
-		metier.addFile(document);
+		File existingFile = metier.getFileByName(name);
+		if(existingFile!= null && existingFile.getSize().equals(size) && existingFile.getFileType().equals(fileType)) {
+			return "le document est déjà existant" ;
+		}
+		else {
+			Corpus selectedCorpus = metier.getCorpusByName(fileData.getSelectedCorpus()) ;
+			File document = new File(name, path, fileType , size);
+			document.setCorpus(selectedCorpus);
+			metier.addFile(document);
+			return "le document a été bien ajouté";
+		}
 	}
 	
 	private String createXmlMetadata(FileData fileData) {
@@ -169,7 +181,7 @@ public class FileController {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-		//	StreamResult result = new StreamResult(new java.io.File("C:\\file.xml"));
+	//		StreamResult result = new StreamResult(new java.io.File("C:\\file.xml"));
 
 			// Output to console for testing
 			 StreamResult result = new StreamResult(System.out);
