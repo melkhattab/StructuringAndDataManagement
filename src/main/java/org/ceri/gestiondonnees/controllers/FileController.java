@@ -62,6 +62,7 @@ public class FileController {
 		model.addAttribute("files", files);
         return "data/files";
     }
+	
 	@RequestMapping(value = "uploadFile", method = RequestMethod.GET)
 	public String addCorpusToDB(Model model) {
 		// this controller allows to create a new user account
@@ -70,7 +71,6 @@ public class FileController {
 		model.addAttribute("fileData",fileData);
 		return "forms/uploadFile";
 	}
-	
 	
 	@RequestMapping(value = "deleteFile/{id}")
 	public String deleteCorpus(@PathVariable("id") int id, Model model) {
@@ -85,7 +85,7 @@ public class FileController {
 	 * @param file
 	 * @return
 	 */
-	@RequestMapping(value = "/addFile", method = RequestMethod.POST)
+	@RequestMapping(value = "addFile", method = RequestMethod.POST)
 	public  String uploadFileHandler(Model model, @RequestParam("file") MultipartFile file, FileData fileData) {
 		
 		if (!file.isEmpty()) {
@@ -106,13 +106,14 @@ public class FileController {
 				stream.write(bytes);
 				stream.close();
 				
-				String result = addFileToDataBase(file, fileData);
-			//	createXmlMetadata(fileData);
-				createXmlMetadata(new FileData());
-				model.addAttribute("result", "abcde");
+				String fileName   = FilenameUtils.getBaseName(file.getOriginalFilename());
+				fileData.setFileName(fileName);
+//				addFileToDataBase(file, fileData);
+				createXmlMetadata(fileData);
+//				createXmlMetadata(new FileData());
 				return "redirect:files" ;
 			} catch (Exception e) {				
-				e.printStackTrace();				
+				e.printStackTrace(); 				
 			}
 		} 
 		
@@ -138,7 +139,7 @@ public class FileController {
 	}
 	
 	private String createXmlMetadata(FileData fileData) {
-		
+		System.out.println("bbbbnhhhhhhhhhhhhhbbbbbbbbbbppppppppppppppp");
 		try {
 			
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -170,21 +171,12 @@ public class FileController {
 			title.appendChild(doc.createTextNode(fileData.getDate()));
 			rootElement.appendChild(date);
 			
-			// set attribute to staff element
-			/*
-			Attr attr = doc.createAttribute("id");
-			attr.setValue("1");
-			staff.setAttributeNode(attr);
-			*/
-			
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-	//		StreamResult result = new StreamResult(new java.io.File("C:\\file.xml"));
-
-			// Output to console for testing
-			 StreamResult result = new StreamResult(System.out);
+			
+			StreamResult result = new StreamResult(new java.io.File("file.xml"));
 
 			transformer.transform(source, result);
 

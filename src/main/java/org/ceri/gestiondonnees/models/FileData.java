@@ -8,6 +8,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileData {
 	
+	/* metadata*/
+	private String title ;
+	private String author ;
+	private String date ;
+	private String description ;
+	private String nbr ;
+	
 	private String fileName;
 	private String fileType ;
 	private String path ;
@@ -18,6 +25,37 @@ public class FileData {
 	private MultipartFile file ; 
 	private String errorMessage ; 
 	
+	public String getTitle() {
+		return this.title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public String getDate() {
+		return date;
+	}
+	public String getNbr() {
+		return nbr;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public void setNbr(String nbr) {
+		this.nbr = nbr;
+	}
 	public String getFileName() {
 		return fileName;
 	}
