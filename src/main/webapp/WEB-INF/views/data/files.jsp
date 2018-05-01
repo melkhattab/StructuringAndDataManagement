@@ -19,12 +19,12 @@
 				<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10 ">
 					<div class="content">
 						<h4>
-							Bonjour! vous êtes Mr : ${userSession.firstName } ${ userSession.lastName }	(id) ${userSession.id }
+							Bonjour! vous êtes Mr :${result } ${userSession.firstName } ${ userSession.lastName }	(id) ${userSession.id }
 						</h4>
 						<f:form modelAttribute="fileData" method="post" action="getFiles" >
 							<div class="box-body">
 								<div class="form-group">
-									<f:input path="fileName" class="form-control" placeholder="Insérez nom du fichier " />
+									<f:input path="fileName" class="form-control" placeholder="Recherche" />
 									<label for="corpus">Corpus</label>									   		
 									<f:select multiple="false" path="selectedCorpus" class="form-control">
 										<f:option value="Select Corpus" />
@@ -43,12 +43,13 @@
 								<table class="table table-striped">
 									<thead>
 										<tr>
-											<th>Nom du fichier</th>
+											<th>Nom</th>
+											<th>Type</th>
+											<th>Taille(Octet)</th>
 											<th>URL</th>
-											<th>Type du fichier</th>
-											<th>Taille</th>
 											<th>Propriétaire</th>
-											<th>Thématique</th>
+											<th>Contributeur</th>
+											<th>Corpus</th>
 											<th>Modifier/Supprimer </th>
 									   </tr>
 									</thead>
@@ -61,6 +62,12 @@
 												<td>${file.path }</td> 
 												<td> 
 													EL KHATTAB Mahmoud		<!-- created by -->
+												</td>
+												<td> 
+													Description		<!-- created by -->
+												</td>
+												<td> 
+													${file.corpus.name }
 												</td>
 												<td>
 													<a href="updateFile">Modifier</a>--

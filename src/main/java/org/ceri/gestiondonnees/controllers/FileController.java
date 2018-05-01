@@ -1,8 +1,11 @@
 package org.ceri.gestiondonnees.controllers;
 
 import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Collection;
+import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
@@ -25,6 +28,7 @@ import org.ceri.gestiondonnees.models.CorpusData;
 import org.ceri.gestiondonnees.models.FileData;
 import org.ceri.gestiondonnees.models.LaboratoryData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +48,8 @@ public class FileController {
 
 	@Autowired
 	private IUserMetier metier ;
+	
+	String filesServerLocation = "F:/Workspace JEE/Corpus/";
 	
 	@RequestMapping(value="files", method = RequestMethod.GET)
     public String displayAllFiles(Model model) {
@@ -87,30 +93,40 @@ public class FileController {
 	 */
 	@RequestMapping(value = "addFile", method = RequestMethod.POST)
 	public  String uploadFileHandler(Model model, @RequestParam("file") MultipartFile file, FileData fileData) {
-		
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
-
-				// Creating the directory to store file
-				String rootPath = System.getProperty("catalina.home");
-				java.io.File dir = new java.io.File(rootPath + "/documents");
-				if (!dir.exists())
-					dir.mkdirs();
+				Properties properties = new Properties();
+//				InputStream inStream = properties.getClass().getResourceAsStream("/resources/config.properties");
+//				if(inStream != null)
+//					properties.load(inStream);
+//				else
+//					throw new FileNotFoundException("property file not found in the classpath");
+//				String filesServerLocation = properties.getProperty("filesServerLocation");
 				
+				String destination = filesServerLocation+"/"+fileData.getSelectedCorpus();
+				java.io.File directory = new java.io.File(destination);
+				
+				//corpus associated directory if not exist
+				if (!directory.exists())
+					directory.mkdirs();
+				
+				java.io.File fileToStore = new java.io.File(destination+"/"+file.getOriginalFilename());
+				file.transferTo(fileToStore);
+				System.out.println("gggggggggggggggggggggggggggggggggggggg : "+filesServerLocation);
+
 				// Create the file on server
-				String path = dir.getAbsolutePath()+ "/"+ file.getOriginalFilename();
-				java.io.File serverFile = new java.io.File(path);
-				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
+//				String path = dir.getAbsolutePath()+ "/"+ file.getOriginalFilename();
+//				java.io.File serverFile = new java.io.File(path);
+//				BufferedOutputStream stream = new BufferedOutputStream(
+//						new FileOutputStream(serverFile));
+//				stream.write(bytes);
+//				stream.close();
 				
 				String fileName   = FilenameUtils.getBaseName(file.getOriginalFilename());
 				fileData.setFileName(fileName);
-//				addFileToDataBase(file, fileData);
+				addFileToDataBase(file, fileData);
 				createXmlMetadata(fileData);
-//				createXmlMetadata(new FileData());
 				return "redirect:files" ;
 			} catch (Exception e) {				
 				e.printStackTrace(); 				
@@ -139,7 +155,7 @@ public class FileController {
 	}
 	
 	private String createXmlMetadata(FileData fileData) {
-		System.out.println("bbbbnhhhhhhhhhhhhhbbbbbbbbbbppppppppppppppp");
+		
 		try {
 			
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -150,25 +166,25 @@ public class FileController {
 			Element rootElement = doc.createElement("Document");
 			doc.appendChild(rootElement);
 			
+			System.out.println(fileData.getTitle());
 			Element title = doc.createElement("title");
 			title.appendChild(doc.createTextNode(fileData.getTitle()));
 			rootElement.appendChild(title);
 			
-			
 			Element author = doc.createElement("author");
-			title.appendChild(doc.createTextNode(fileData.getAuthor()));
+			author.appendChild(doc.createTextNode(fileData.getAuthor()));
 			rootElement.appendChild(author);
 			
 			Element description = doc.createElement("description");
-			title.appendChild(doc.createTextNode(fileData.getDescription()));
+			description.appendChild(doc.createTextNode(fileData.getDescription()));
 			rootElement.appendChild(description);
 			
 			Element nbrPages = doc.createElement("pages");
-			title.appendChild(doc.createTextNode(fileData.getNbr()));
+			nbrPages.appendChild(doc.createTextNode(fileData.getNbr()));
 			rootElement.appendChild(nbrPages);
 			
 			Element date = doc.createElement("date");
-			title.appendChild(doc.createTextNode(fileData.getDate()));
+			date.appendChild(doc.createTextNode(fileData.getDate()));
 			rootElement.appendChild(date);
 			
 			// write the content into xml file
@@ -176,10 +192,12 @@ public class FileController {
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 			
-			StreamResult result = new StreamResult(new java.io.File("file.xml"));
-
+			String rootPath = System.getProperty("user.dir") ;
+			System.out.println("rootPath : "+rootPath);
+			java.io.File xmlFile = new java.io.File(rootPath+"/file.xml") ;
+			StreamResult result = new StreamResult(xmlFile);
+			
 			transformer.transform(source, result);
-
 			System.out.println("File saved!");
 			
 		} catch (ParserConfigurationException e) {

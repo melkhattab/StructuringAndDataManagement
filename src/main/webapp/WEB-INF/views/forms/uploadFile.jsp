@@ -26,23 +26,35 @@
 								<div class="box-body">
 									<div class="form-group">
 										<label for="fileName"> </label> 
-										<input type="text" name="name" class="form-control" placeholder="Titre..." >
+										<f:input type="text" name="name" path="title" class="form-control" placeholder="Titre..." />
 									</div>
 									<div class="form-group">
 										<label for="fileName"></label> 
-										<input type="text" name="name" class="form-control" placeholder="Auteur " >
+										<f:input type="text" name="name" path="author" class="form-control" placeholder="Auteur " />
 									</div>
 									<div class="form-group">
 										<label for="fileName"></label> 
-										<input type="text" name="name" class="form-control" placeholder="Date..." >
+										<f:input type="text" name="name" path="date" class="form-control" placeholder="Date de création" />
 									</div>
 									<div class="form-group">
 										<label for="fileName"></label> 
-										<input type="text" name="name" class="form-control" placeholder="Nombre de pages..." >
+										<f:input type="text" name="name" path="nbr" class="form-control" placeholder="Nombre de pages" />
+									</div>
+									<div class="form-group">
+										<f:select multiple="false" path="selectedCorpus" class="form-control">
+											<f:option value="Select Corpus" />
+									   		<c:forEach items="${fileData.corpus}" var="corpus">
+											   <f:option value="${corpus.name}" />
+											</c:forEach>
+										</f:select>
+									</div>
+									<div class="form-group"> 
+										 
+										<f:textarea path="description" rows="5" cols="30" class="form-control" placeholder="Description"/>
 									</div>
 									<div class="form-group">
 										<label for="fileName"></label> 
-										<input type="file" name="file" class="form-control" placeholder="selectionnez le document">
+										<input type="file" name="file" class="form-control" placeholder="Selectionnez le fichier">
 									</div>
 									<div class="form-group">
 										<button type="submit" class="btn btn-primary mb-2">Ajouter</button>
