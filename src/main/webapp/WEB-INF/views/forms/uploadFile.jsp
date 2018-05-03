@@ -42,7 +42,6 @@
 									</div>
 									<div class="form-group">
 										<f:select multiple="false" path="selectedCorpus" class="form-control">
-											<f:option value="Select Corpus" />
 									   		<c:forEach items="${fileData.corpus}" var="corpus">
 											   <f:option value="${corpus.name}" />
 											</c:forEach>

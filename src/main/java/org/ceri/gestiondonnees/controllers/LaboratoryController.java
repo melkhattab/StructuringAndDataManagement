@@ -49,7 +49,7 @@ public class LaboratoryController {
 			return "redirect:laboratories";
 		}
 		else {
-			labData.setErrorMessage("Le laboratoire existe déjà");
+			labData.setErrorMessage("Le laboratoire existant");
 			model.addAttribute("labData",labData) ;
 			return "forms/createLaboratory";
 		}
