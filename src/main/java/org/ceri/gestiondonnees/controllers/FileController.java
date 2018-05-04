@@ -28,7 +28,6 @@ public class FileController {
 	@RequestMapping(value="files", method = RequestMethod.GET)
     public String displayAllFiles(Model model) throws Exception{
 		
-		
 		Collection<File> files = metier.getAllFiles();
 		model.addAttribute("files", files);
 		FileData fileData = new FileData() ; 
@@ -91,9 +90,7 @@ public class FileController {
 				String fileName   = FilenameUtils.getBaseName(file.getOriginalFilename());
 				fileData.setFileName(fileName);
 				FileInExistDB.putFile(fileData, "admin","admin");
-//				addFileToDataBase(file, fileData);
-				
-//				MedataDataFileManipulation.put();
+				addFileToDataBase(file, fileData);
 				return "redirect:files" ;
 			} catch (Exception e) {	
 				

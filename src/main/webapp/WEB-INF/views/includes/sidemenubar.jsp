@@ -10,7 +10,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">Dashboard</a>
+                    <a href="search">Rechercher</a>
                 </li>
                 <li>
                     <a href="files">Documents</a>

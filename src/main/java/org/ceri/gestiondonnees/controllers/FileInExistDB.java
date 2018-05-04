@@ -5,6 +5,8 @@ package org.ceri.gestiondonnees.controllers;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -39,14 +41,15 @@ public class FileInExistDB {
 
 	public final static String URI = "xmldb:exist://localhost:8080/exist/xmlrpc";
 					    
-//	public final static String driver = "org.exist.xmldb.DatabaseImpl";
-	public static String collection ="/db/mahmoud";
+	public final static String driver = "org.exist.xmldb.DatabaseImpl";
+	public static String collection ="/db/";
 	public static String file ;
 	
 	/**
 	 * 
-	 *  This static method will add xxml file metadata to an xml database collection which has the same name as file's corpus if exists, 
-	 * otherwise it will create a new collection and adding the xml file metadata to it
+	 * This static method will first create xml metadata file and then add it to an xml 
+	 * database collection which has the same name as file's corpus if exists, otherwise 
+	 * it will create a new collection and adding the xml file metadata to it
 	 * 
 	 * @param fileData, information on the file added by contributor, these information will be used to create xml file metadata
 	 * @param userName, used to access to xml database 
@@ -54,39 +57,31 @@ public class FileInExistDB {
 	 * 
 	 */
 	public static boolean putFile(FileData fileData, String userName, String password) throws Exception{
-		createXmlMetadataFile(fileData);		
-//		FileInExistDB.collection += fileData.getSelectedCorpus();
 		
+		createXmlMetadataFile(fileData);		
 		FileInExistDB.file = System.getProperty("user.dir")+"\\"+fileData.getFileName()+".xml" ;
-		String driver = "org.exist.xmldb.DatabaseImpl";		
 		try {
 			
 			Class<?> cl = Class.forName(driver);
-			System.out.println("Je suis là 1 ... "+fileData.getFileName());
 			Database database = (Database)cl.newInstance();
 			database.setProperty("create-database", "true");
 			DatabaseManager.registerDatabase(database);
-			System.out.println("Je suis là 2 ...");
+			
 //			 // try to get collection
 			Collection col = 
 				DatabaseManager.getCollection(URI + collection, userName, password);
-			System.out.println("Je suis là 3 ...");
-			if(col == null) {				
-				
+			
+			if(col == null) {			
+				FileInExistDB.collection += fileData.getSelectedCorpus();
 	            Collection root = DatabaseManager.getCollection(URI + XmldbURI.ROOT_COLLECTION_URI);
 	            CollectionManagementService mgtService = 
 	                (CollectionManagementService)root.getService("CollectionManagementService", "1.0");
 	            col = mgtService.createCollection(collection.substring((XmldbURI.ROOT_COLLECTION_URI + "/").length()));
 	        }
-//			Path f = Paths.get(file);
-			System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbb:::bbbbbbbbbbbbbb   :::     "+file);
 			XMLResource document = (XMLResource)col.createResource(fileData.getFileName()+".xml", XMLResource.RESOURCE_TYPE);
-			
 			File content = new File(file);
 			document.setContent(content);
-			System.out.print("storing document ... "+document.getContent()+" : "+document.getId()+" direname : "+FileUtils.dirname(file));
 			col.storeResource(document);
-			System.out.println("deleting file ...");
 			content.delete();
 			System.out.println("file deleted");
 			return true ;
@@ -94,31 +89,29 @@ public class FileInExistDB {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("exceprion message : "+e.getMessage());
+			System.out.println("exception message : "+e.getMessage());
 			return false ;
 		}			
 		       
 	}
 	
 	/**
-	 * 
+	 * getFile, search in metadata xml files an provides 
 	 * @param xQuery correspond to the xquery for finding data from eXist xml database 
 	 */
-	public static void getFile( String xQuery) {
-		
+	public static List<String> getFile( String xQuery) {
+		ArrayList<String> xQueryResult = new ArrayList<String>(10);
 		try {
-			String driver = "org.exist.xmldb.DatabaseImpl";
+			
 			Class<?> cl = Class.forName(driver);			
 			Database database = (Database)cl.newInstance();
 			DatabaseManager.registerDatabase(database);
 			
 	        // try to get collection
 			Collection col = DatabaseManager.getCollection(URI + collection);
+			
+			//if not exists create a new one 
 			if(col == null) {
-	            // collection does not exist: get root collection and create.
-	            // for simplicity, we assume that the new collection is a
-	            // direct child of the root collection, e.g. /db/test.
-	            // the example will fail otherwise.
 	            Collection root = DatabaseManager.getCollection(URI + XmldbURI.ROOT_COLLECTION_URI);
 	            CollectionManagementService mgtService = 
 	                (CollectionManagementService)root.getService("CollectionManagementService", "1.0");
@@ -129,15 +122,19 @@ public class FileInExistDB {
 			service.setProperty("indent", "yes");
 			ResourceSet result = service.query(xQuery);
 			ResourceIterator iterator =result.getIterator();
-			System.out.println("ok."+result.getSize());
 			while(iterator.hasMoreResources()) {
 				Resource r = iterator.nextResource();
 				String value = (String) r.getContent();
+				xQueryResult.add(value);
 				System.out.println(value);
 			}
-		}catch(Exception e ){
-			System.out.println("Error : "+e.getMessage());
+			return null ; 
 		}
+		catch(Exception e ){
+			System.out.println("Error : "+e.getMessage());
+			return null ; 
+		}
+		
 	}
 	/**
 	 * This methods create the xml metadata file associated for a file uploaded on the server.

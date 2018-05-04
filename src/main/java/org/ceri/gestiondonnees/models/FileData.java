@@ -25,6 +25,10 @@ public class FileData {
 	private MultipartFile file ; 
 	private String errorMessage ; 
 	
+	private String searchBy ; 
+	private String searchValue; 
+	
+	
 	public String getTitle() {
 		return this.title;
 	}
@@ -113,5 +117,17 @@ public class FileData {
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
-	
+	public String getSearchBy() {
+		return searchBy;
+	}
+	public String getSearchValue() {
+		return searchValue;
+	}
+	public void setSearchBy(String searchBy) {
+		this.searchBy = searchBy;
+	}
+	public void setSearchValue(String searchValue) {
+		this.searchValue = searchValue;
+	}
+		
 }
