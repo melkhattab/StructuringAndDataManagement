@@ -1,13 +1,10 @@
 package org.ceri.gestiondonnees.controllers;
 
-
-
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Scanner;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,9 +13,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.ceri.gestiondonnees.models.FileData;
-import org.exist.util.FileUtils;
 import org.exist.xmldb.XmldbURI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -42,9 +37,9 @@ public class FileInExistDB {
 	public final static String URI = "xmldb:exist://localhost:8080/exist/xmlrpc";
 					    
 	public final static String driver = "org.exist.xmldb.DatabaseImpl";
-	public static String collection ="/db/";
-	public static String file ;
 	
+	public static String file ;	
+
 	/**
 	 * 
 	 * This static method will first create xml metadata file and then add it to an xml 
@@ -68,11 +63,12 @@ public class FileInExistDB {
 			DatabaseManager.registerDatabase(database);
 			
 //			 // try to get collection
+			String collection ="/db/"+fileData.getSelectedCorpus();
 			Collection col = 
 				DatabaseManager.getCollection(URI + collection, userName, password);
 			
 			if(col == null) {			
-				FileInExistDB.collection += fileData.getSelectedCorpus();
+//				FileInExistDB.collection += fileData.getSelectedCorpus();
 	            Collection root = DatabaseManager.getCollection(URI + XmldbURI.ROOT_COLLECTION_URI);
 	            CollectionManagementService mgtService = 
 	                (CollectionManagementService)root.getService("CollectionManagementService", "1.0");
@@ -99,7 +95,7 @@ public class FileInExistDB {
 	 * getFile, search in metadata xml files an provides 
 	 * @param xQuery correspond to the xquery for finding data from eXist xml database 
 	 */
-	public static List<String> getFile( String xQuery) {
+	public static List<String> getFile( String xQuery, String corpus) {
 		ArrayList<String> xQueryResult = new ArrayList<String>(10);
 		try {
 			
@@ -108,6 +104,7 @@ public class FileInExistDB {
 			DatabaseManager.registerDatabase(database);
 			
 	        // try to get collection
+			String collection ="/db/"+corpus;
 			Collection col = DatabaseManager.getCollection(URI + collection);
 			
 			//if not exists create a new one 
@@ -126,7 +123,7 @@ public class FileInExistDB {
 				Resource r = iterator.nextResource();
 				String value = (String) r.getContent();
 				xQueryResult.add(value);
-				System.out.println(value);
+//				System.out.println(value);
 			}
 			return null ; 
 		}
@@ -143,12 +140,9 @@ public class FileInExistDB {
 	 */
 	
 	private static String createXmlMetadataFile(FileData fileData) {
-		
 		try {
-			
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			
 			// root elements
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("Document");
@@ -158,40 +152,64 @@ public class FileInExistDB {
 			title.appendChild(doc.createTextNode(fileData.getTitle()));
 			rootElement.appendChild(title);
 			
-			Element author = doc.createElement("author");
+			Element author = doc.createElement("AUTHOR");
 			author.appendChild(doc.createTextNode(fileData.getAuthor()));
 			rootElement.appendChild(author);
 			
-			Element description = doc.createElement("description");
+			Element description = doc.createElement("DESCRIPTION");
 			description.appendChild(doc.createTextNode(fileData.getDescription()));
 			rootElement.appendChild(description);
 			
-			Element nbrPages = doc.createElement("pages");
+			Element nbrPages = doc.createElement("PAGES");
 			nbrPages.appendChild(doc.createTextNode(fileData.getNbr()));
 			rootElement.appendChild(nbrPages);
 			
-			Element date = doc.createElement("date");
+			Element date = doc.createElement("DATE");
 			date.appendChild(doc.createTextNode(fileData.getDate()));
 			rootElement.appendChild(date);
 			
+			Element corpus = doc.createElement("CORPUS");
+			corpus.appendChild(doc.createTextNode(fileData.getSelectedCorpus()));
+			rootElement.appendChild(corpus);
+			
+			Element content = doc.createElement("CONTENT");
+			rootElement.appendChild(content);
+			System.out.println("*****path *****  :  "+fileData.getPath());
+			File textFile = new File(fileData.getPath());
+			Scanner scanner = new Scanner(textFile);
+			Scanner scanner2 = null ;
+			while(scanner.hasNextLine()) {
+				scanner2 = new Scanner(scanner.nextLine());
+				while (scanner2.hasNext()) {
+					String word = scanner2.next();
+					Element wordNode = doc.createElement("WORD");
+					wordNode.appendChild(doc.createTextNode(word.toString()));
+					System.out.println("word is : "+word);
+					content.appendChild(wordNode);
+				}
+			}
+			scanner.close();
+			scanner2.close();
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 			
 			String rootPath = System.getProperty("user.dir") ;
-			
 			java.io.File xmlFile = new java.io.File(rootPath+"/"+fileData.getFileName()+".xml") ;
 			StreamResult result = new StreamResult(xmlFile);
 			
 			transformer.transform(source, result);
-			System.out.println("File saved in : "+rootPath);
-			System.out.println("======================================================== : "+xmlFile);
+			System.out.println("File saved in : "+rootPath+": file : "+xmlFile);
 			
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

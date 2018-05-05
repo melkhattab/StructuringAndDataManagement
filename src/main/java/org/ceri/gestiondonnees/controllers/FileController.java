@@ -37,12 +37,12 @@ public class FileController {
     }
 	
 	@RequestMapping(value="getFiles", method = RequestMethod.POST)
-    public String displayFiles(Model model, FileData fileInf ) {
+    public String displayFiles(Model model, FileData fileData ) {
 		
 		String xQuery = "for $x in /bookstores/book/author[1]/text() return $x";
-		FileInExistDB.getFile(xQuery);
+		FileInExistDB.getFile(xQuery, fileData.getSelectedCorpus());
 		
-		String name  = fileInf.getFileName();
+		String name  = fileData.getFileName();
 		Collection<File> files = metier.getFilesByName(name);
 		model.addAttribute("files", files);
         return "data/files";
@@ -75,11 +75,9 @@ public class FileController {
 		
 		if (!file.isEmpty()) {
 			try {
-				
 				String destination = filesServerLocation+"/"+fileData.getSelectedCorpus()+"/"+file.getOriginalFilename();
 				fileData.setPath(destination);
 				java.io.File directory = new java.io.File(destination);
-				
 				//corpus associated directory if not exist
 				if (!directory.exists())
 					directory.mkdirs();
@@ -89,16 +87,13 @@ public class FileController {
 				
 				String fileName   = FilenameUtils.getBaseName(file.getOriginalFilename());
 				fileData.setFileName(fileName);
-				FileInExistDB.putFile(fileData, "admin","admin");
 				addFileToDataBase(file, fileData);
+				FileInExistDB.putFile(fileData, "admin","admin");
 				return "redirect:files" ;
 			} catch (Exception e) {	
-				
 				e.printStackTrace();
-				System.out.println("nnn");
 			}
 		} 
-		System.out.println();
 		return "redirect:files" ;
 	}
 	
