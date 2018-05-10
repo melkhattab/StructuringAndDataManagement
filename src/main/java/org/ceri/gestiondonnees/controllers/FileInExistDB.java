@@ -133,6 +133,47 @@ public class FileInExistDB {
 		
 	}
 	/**
+	 * getFile, search in metadata xml files an provides 
+	 * @param xQuery correspond to the xquery for finding data from eXist xml database 
+	 */
+	public static StringBuilder getContext( String xQuery) {
+		StringBuilder context = new StringBuilder();
+		try {
+			
+			Class<?> cl = Class.forName(driver);			
+			Database database = (Database)cl.newInstance();
+			DatabaseManager.registerDatabase(database);
+			
+	        // try to get collection
+			String collection ="/db/";
+			Collection col = DatabaseManager.getCollection(URI + collection);
+			
+			//if not exists create a new one 
+			if(col == null) {
+	            Collection root = DatabaseManager.getCollection(URI + XmldbURI.ROOT_COLLECTION_URI);
+	            CollectionManagementService mgtService = 
+	                (CollectionManagementService)root.getService("CollectionManagementService", "1.0");
+	            col = mgtService.createCollection(collection.substring((XmldbURI.ROOT_COLLECTION_URI + "/").length()));
+	        }
+			
+			XQueryService service = (XQueryService) col.getService("XQueryService","1.0");
+			service.setProperty("indent", "yes");
+			ResourceSet result = service.query(xQuery);
+			ResourceIterator iterator =result.getIterator();
+			while(iterator.hasMoreResources()) {
+				Resource r = iterator.nextResource();
+				String value = (String) r.getContent();
+				context.append(value+" ");
+			}
+			return context ; 
+		}
+		catch(Exception e ){
+			System.out.println("Error : "+e.getMessage());
+			return null ; 
+		}
+		
+	}
+	/**
 	 * This methods create the xml metadata file associated for a file uploaded on the server.
 	 * @param tags : represents the Map of the pair (tagName - tagValue) of the xml file 
 	 * @return : the created xml file.
