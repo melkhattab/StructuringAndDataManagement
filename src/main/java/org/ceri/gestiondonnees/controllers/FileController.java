@@ -40,8 +40,7 @@ public class FileController {
     public String displayFiles(Model model, FileData fileData ) {
 		
 		String xQuery = "for $x in /bookstores/book/author[1]/text() return $x";
-		FileInExistDB.getFile(xQuery, fileData.getSelectedCorpus());
-		
+		FileInExistDB.getFile(xQuery);
 		String name  = fileData.getFileName();
 		Collection<File> files = metier.getFilesByName(name);
 		model.addAttribute("files", files);
@@ -86,9 +85,12 @@ public class FileController {
 				file.transferTo(fileToStore);
 				
 				String fileName   = FilenameUtils.getBaseName(file.getOriginalFilename());
+				fileName = fileName.replaceAll(" |'", "_");
 				fileData.setFileName(fileName);
-				addFileToDataBase(file, fileData);
-				FileInExistDB.putFile(fileData, "admin","admin");
+				boolean bool = FileInExistDB.putFile(fileData, "admin","admin");
+				if(bool == true) {
+					addFileToDataBase(file, fileData);
+				}
 				return "redirect:files" ;
 			} catch (Exception e) {	
 				e.printStackTrace();

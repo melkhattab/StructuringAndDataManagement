@@ -79,7 +79,6 @@ public class FileInExistDB {
 			document.setContent(content);
 			col.storeResource(document);
 			content.delete();
-			System.out.println("file deleted");
 			return true ;
 			
 		} catch (Exception e) {
@@ -87,7 +86,7 @@ public class FileInExistDB {
 			e.printStackTrace();
 			System.out.println("exception message : "+e.getMessage());
 			return false ;
-		}			
+		}		
 		       
 	}
 	
@@ -95,8 +94,8 @@ public class FileInExistDB {
 	 * getFile, search in metadata xml files an provides 
 	 * @param xQuery correspond to the xquery for finding data from eXist xml database 
 	 */
-	public static List<String> getFile( String xQuery, String corpus) {
-		ArrayList<String> xQueryResult = new ArrayList<String>(10);
+	public static List<String> getFile( String xQuery) {
+		ArrayList<String> xQueryResult = new ArrayList<String>();
 		try {
 			
 			Class<?> cl = Class.forName(driver);			
@@ -104,7 +103,7 @@ public class FileInExistDB {
 			DatabaseManager.registerDatabase(database);
 			
 	        // try to get collection
-			String collection ="/db/"+corpus;
+			String collection ="/db/";
 			Collection col = DatabaseManager.getCollection(URI + collection);
 			
 			//if not exists create a new one 
@@ -119,13 +118,13 @@ public class FileInExistDB {
 			service.setProperty("indent", "yes");
 			ResourceSet result = service.query(xQuery);
 			ResourceIterator iterator =result.getIterator();
+			System.out.println("================================================================================ "+result.toString());
 			while(iterator.hasMoreResources()) {
 				Resource r = iterator.nextResource();
 				String value = (String) r.getContent();
 				xQueryResult.add(value);
-//				System.out.println(value);
 			}
-			return null ; 
+			return xQueryResult ; 
 		}
 		catch(Exception e ){
 			System.out.println("Error : "+e.getMessage());
@@ -145,11 +144,11 @@ public class FileInExistDB {
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			// root elements
 			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("Document");
+			Element rootElement = doc.createElement("DOCUMENT");
 			doc.appendChild(rootElement);
 			
-			Element title = doc.createElement("title");
-			title.appendChild(doc.createTextNode(fileData.getTitle()));
+			Element title = doc.createElement("TITLE");
+			title.appendChild(doc.createTextNode(fileData.getFileName()));
 			rootElement.appendChild(title);
 			
 			Element author = doc.createElement("AUTHOR");
@@ -160,9 +159,9 @@ public class FileInExistDB {
 			description.appendChild(doc.createTextNode(fileData.getDescription()));
 			rootElement.appendChild(description);
 			
-			Element nbrPages = doc.createElement("PAGES");
-			nbrPages.appendChild(doc.createTextNode(fileData.getNbr()));
-			rootElement.appendChild(nbrPages);
+			Element path = doc.createElement("PATH");
+			path.appendChild(doc.createTextNode(fileData.getPath()));
+			rootElement.appendChild(path);
 			
 			Element date = doc.createElement("DATE");
 			date.appendChild(doc.createTextNode(fileData.getDate()));
@@ -174,17 +173,17 @@ public class FileInExistDB {
 			
 			Element content = doc.createElement("CONTENT");
 			rootElement.appendChild(content);
-			System.out.println("*****path *****  :  "+fileData.getPath());
 			File textFile = new File(fileData.getPath());
 			Scanner scanner = new Scanner(textFile);
 			Scanner scanner2 = null ;
+			int id = 1 ;
 			while(scanner.hasNextLine()) {
 				scanner2 = new Scanner(scanner.nextLine());
 				while (scanner2.hasNext()) {
 					String word = scanner2.next();
 					Element wordNode = doc.createElement("WORD");
+					wordNode.setAttribute("id", ""+id++);
 					wordNode.appendChild(doc.createTextNode(word.toString()));
-					System.out.println("word is : "+word);
 					content.appendChild(wordNode);
 				}
 			}
