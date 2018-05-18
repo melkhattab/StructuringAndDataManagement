@@ -136,7 +136,15 @@ public class FileInExistDB {
 	 * getFile, search in metadata xml files an provides 
 	 * @param xQuery correspond to the xquery for finding data from eXist xml database 
 	 */
-	public static StringBuilder getContext( String xQuery) {
+	public static StringBuilder getContext(String id, boolean before, int size) {
+		String xQuery ;
+		if(before ==true){
+			xQuery =  "let $id := "+id+" let $doc := /DOCUMENT for $word in $doc/*/WORD where $word[@id >= -"+size+"+$id and @id < $id] return concat($word,\"\")";
+		}
+		else {
+			xQuery  =   "let $id := "+id+" let $doc := /DOCUMENT for $word in $doc/*/WORD where $word[@id > $id and @id <= $id+"+size+"] return concat($word,\"\")";
+		}
+		
 		StringBuilder context = new StringBuilder();
 		try {
 			

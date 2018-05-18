@@ -74,13 +74,10 @@ public class UserController {
     public void sendMail(String sendTo) {
     	// takes input from e-mail form
         String subject = "Test sending e-mail";
-        
         StringBuilder message = new StringBuilder();
         message.append("This is my first e-mail using javaMail with spring framework \n\t\t ");
         message.append("Please contact us for need in the following address\n\t localhost:8080/gestiondonnes/login");
- 
         // creates a simple e-mail object 
-        
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(sendTo);
         email.setSubject(subject);
