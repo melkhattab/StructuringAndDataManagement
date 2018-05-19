@@ -28,6 +28,7 @@ public class FileData {
 	private String searchBy ; 
 	private String searchValue; 
 	
+	private String requestContext ; 
 	
 	public String getTitle() {
 		return this.title;
@@ -128,6 +129,12 @@ public class FileData {
 	}
 	public void setSearchValue(String searchValue) {
 		this.searchValue = searchValue;
+	}
+	public String getRequestContext() {
+		return requestContext;
+	}
+	public void setRequestContext(String requestContext) {
+		this.requestContext = requestContext;
 	}
 		
 }

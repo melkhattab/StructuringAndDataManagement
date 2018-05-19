@@ -43,7 +43,7 @@
 										<td style="background-color: #b0ffff; border-width:3px; border-style:solid; border-color: #ffffff;"><a href="moreContext/${item.value.get(0)}">${item.value.get(1)}</a></td>
 										<td style="background-color: #b0ffff; border-width:3px; border-style:solid; border-color: #ffffff;"><a href="file">${item.value.get(0)} - ${item.value.get(0)-20} - ${item.value.get(0)+20} </a></td>
 										<td style="background-color: #b0ffff; border-width:3px; border-style:solid; border-color: #ffffff;">
-												${item.value.get(4)} <b><a href="extendedContext?&num=${loop.index+1}&name=${loop.index+1}&id=${item.value.get(0)}">
+												${item.value.get(4)} <b><a href="extendedContext?num=${loop.index+1}&name=${loop.index+1}&id=${item.value.get(0)}">
 												${item.value.get(3)}
 												</a></b> ${item.value.get(5)}
 										</td>

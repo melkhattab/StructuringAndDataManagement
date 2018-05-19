@@ -17,14 +17,14 @@
 									<th> Displaying extended context for query match in text <i>la_jalousie</i></th>
 								</tr>
 								<tr>
-									<f:form modelAttribute="fileData" method="post" action="searchFiles" >
+									<f:form modelAttribute="fileData" method="get" action="redirect" >
 										<div class="box-body">
 											<div class="form-group">
-												<label for="corpus">Par : </label>									   		
-												<f:select multiple="false" path="searchBy" class="form-control">
-													<f:option value="Corpus" />
-													<f:option value="Author" />
-													<f:option value="Title" />
+												<label for="requestContext">Par : </label>									   		
+												<f:select multiple="false" path="requestContext" class="form-control">
+													<f:option value="more context" />
+													<f:option value="less context" />
+													<f:option value="research result" />
 												</f:select>
 											</div>							
 											<div class="forsm-group">
