@@ -192,39 +192,54 @@ public class SearchController {
 	public void getLessContext( Model model, HttpSession queryResult){
 		
 		HashMap<String, ArrayList<String>> context = (HashMap<String, ArrayList<String>>) queryResult.getAttribute("queryResult") ;
+		int beforeId = (Integer) queryResult.getAttribute("beforeId") ;
+		int afterId = (Integer) queryResult.getAttribute("afterId") ;
 		int orderNumber = (Integer) queryResult.getAttribute("orderNumber");
 		int wordId = (Integer) queryResult.getAttribute("wordId");
+		
 		String[] before = null ;
 		String[] after = null ;
-		ArrayList<String> contextBefore = new ArrayList<String>();
-		ArrayList<String> contextAfter = new ArrayList<String>();
+		StringBuilder contextBefore = new StringBuilder();
+		StringBuilder contextAfter = new StringBuilder();
 		if(context != null){
-			before = context.get(wordId+"").get(4).replace(" ", "").split(" ") ;
-			after = context.get(wordId+"").get(5).replace(" ", "").split(" ") ;
+			before = context.get(wordId+"").get(4).split(" ") ;
+			after = context.get(wordId+"").get(5).split(" ") ;
 		}
 		
 		for(int i=20 ; i < before.length ; i++) {
-			contextBefore.add(before[i]);
+			contextBefore.append(before[i]);
+			contextBefore.append(" ");
 		}
 		
 		for(int i=0 ; i < (after.length - 20) ; i++) {
-			contextAfter.add(after[i]);
+			contextAfter.append(after[i]);
+			contextAfter.append(" ");
 		}
 		
-		System.out.println("vvvvvvvvvvvvv : "+before[0]);
-		System.out.println("uuuuuuuuuuuuu : "+after);
+		System.out.println(wordId+" : vvvvvvvvvvvvv : "+contextBefore.toString());
+		System.out.println("uuuuuuuuuuuuu : "+after.length);
 		
 		ArrayList<String> data = new ArrayList<String>(5);
 		data.add(context.get(wordId+"").get(0));
 		data.add(context.get(wordId+"").get(1));
 		data.add(context.get(wordId+"").get(2));
 		data.add(context.get(wordId+"").get(3));
-		data.add(contextBefore.toString());
-		data.add(contextAfter.toString());
+		if(before.length >35) {
+			data.add(contextBefore.toString());
+			data.add(contextAfter.toString());
+			beforeId += 20;
+			afterId -= 20;
+		}
+		else {
+			data.add(context.get(wordId+"").get(4));
+			data.add(context.get(wordId+"").get(5));
+		}
 		context.put(wordId+"", data);
+		model.addAttribute("beforeId", beforeId);
+		model.addAttribute("afterId", afterId);
 		model.addAttribute("orderNumber", orderNumber);
 		model.addAttribute("fileData", new FileData());
 		model.addAttribute("queryResult", context);
-		
+		System.out.println(beforeId-20 +" ::  :: "+(afterId+20));
 	}
 }

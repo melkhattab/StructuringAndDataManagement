@@ -1,9 +1,35 @@
+table.concordtable {
+    border-style: solid;
+    border-color: #ffffff;
+    border-width: 5px;
+}
+td.basicbox{
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #ddddff;
+    font-family: verdana;
+    font-size: 10pt;
+}
 td.concordgeneral {
     padding-left: 7px;
     padding-right: 7px;
     padding-top: 3px;
     padding-bottom: 3px;
     background-color: #b0ffff;
+    font-family: verdana;
+    font-size: 10pt;
+    border-style: solid;
+    border-color: #ffffff;
+    border-width: 2px;
+}
+td.concordgrey {
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: #d5d5d5;
     font-family: verdana;
     font-size: 10pt;
     border-style: solid;
@@ -22,7 +48,17 @@ th.concordtable {
     border-color: #ffffff;
     border-width: 2px;
 }
-
+hr {
+    display: block;
+    unicode-bidi: isolate;
+    -webkit-margin-before: 0.5em;
+    -webkit-margin-after: 0.5em;
+    -webkit-margin-start: auto;
+    -webkit-margin-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
 .container{
 	min-height: 200px;;
 }

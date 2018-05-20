@@ -22,17 +22,26 @@ public class CorpusController {
 	private IUserMetier metier ;
 
 	@RequestMapping(value="corpus", method = RequestMethod.GET)
-    public String displayAllCorpusList(Model model) {
-		Collection<Corpus> allCorpus = metier.getAllCorpus();
-		model.addAttribute("allCorpus", allCorpus);
-        return "data/corpus";
+    public String displayAllCorpusList(Model model, HttpSession session) {
+		User user = (User) session.getAttribute("userSession");
+		if(user != null){
+			Collection<Corpus> allCorpus = metier.getAllCorpus();
+			model.addAttribute("allCorpus", allCorpus);
+	        return "data/corpus";
+		}
+		return "redirect:form/index";
     }
 	
 	@RequestMapping(value = "addCorpus", method = RequestMethod.GET)
-	public String addCorpusToDB(Model model) {
+	public String addCorpusToDB(Model model, HttpSession session) {
 		// this controller allows to create a new user account
-		model.addAttribute("corpus",new CorpusData());
-		return "forms/createCorpus";
+		User user = (User) session.getAttribute("userSession");
+		if(user != null){
+			model.addAttribute("corpus",new CorpusData());
+			return "forms/createCorpus";
+		}
+		return "redirect:form/index";
+		
 	}
 	
 	@RequestMapping(value = "createCorpus", method = RequestMethod.POST)

@@ -1,17 +1,32 @@
-<h2> Login : </h2>
 <f:form modelAttribute="loginDetails" method="post" action="signIn" >	
-	<div class="form-group">
-		<label for="email">Email  * </label> 
-		<f:input path="email" class="form-control" placeholder="email@example.com"/>
-	</div>
-	<div>
-		<label for="password">Mot de passe * </label> 
-		<f:password path="password"  class="form-control" placeholder="Mot de passe"/>
-	</div>
-	<div>
-		<a href="createAccount"> create account</a>
-	</div>
-	<div>
-		<button type="submit" class="btn btn-primary mb-2">Login</button>
-	</div>
+	<table class="basicbox" style="margin:auto">
+		<tbody>
+			<tr>
+				<td class="basicbox">Enter your username:</td>
+				<td class="basicbox">
+					<f:input path="email" name="username" width="30" class="form-control" placeholder="email@example.com"/>
+				</td>
+			</tr>
+			<tr>
+				<td class="basicbox">Enter your password:</td>
+				<td class="basicbox">
+					<f:password path="password"  name="password" width="100" class="form-control" placeholder="password"/>
+				</td>
+			</tr>
+			<tr>
+				<td class="basicbox">Tick here to stay logged in on this computer:</td>
+				<td class="basicbox">
+					<input type="checkbox" name="persist" value="1">
+				</td>
+			</tr>
+			<tr>
+				<td class="basicbox" align="right">
+					<input type="submit" value="Click here to log in">
+				</td>
+				<td class="basicbox" align="left">
+					<input type="reset" value="Clear form">
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </f:form>

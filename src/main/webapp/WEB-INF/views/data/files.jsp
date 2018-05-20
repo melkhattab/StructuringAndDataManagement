@@ -8,15 +8,13 @@
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/mycss.css"/>
 	</head>
 	<body>
-		<div class="container"> 
 			<div class="row navbar">
 				<%@include file="../includes/navbar.jsp" %>  
 			</div>
 			<div class="row" style="background-color: #ecf2f8;">
-				<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-					<%@include file="../includes/sidemenubar.jsp" %>
-				</div>
-				<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10 ">
+				<%@include file="../includes/sidemenubar.jsp" %>
+				
+				<div class="col-sm-8 col-md-8 col-lg-8 col-xl-9 ">
 					<div class="content">
 						<h4>
 							Bonjour! vous êtes Mr :${result } ${userSession.firstName } ${ userSession.lastName }	(id) ${userSession.id }
@@ -83,11 +81,11 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
-					<div class="footer">
-						<%@include file="../includes/footer.jsp" %>
-					</div>
+					
 				</div>
 			</div>
+			<div class="footer">
+				<%@include file="../includes/footer.jsp" %>
 			</div>
 	
 		<!-- scripts -->

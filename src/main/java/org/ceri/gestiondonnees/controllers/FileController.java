@@ -48,12 +48,17 @@ public class FileController {
     }
 	
 	@RequestMapping(value = "uploadFile", method = RequestMethod.GET)
-	public String addCorpusToDB(Model model) {
+	public String addCorpusToDB(Model model, HttpSession session) {
 		// this controller allows to create a new user account
-		FileData fileData = new FileData() ; 
-		fileData.setCorpus(metier.getAllCorpus());
-		model.addAttribute("fileData",fileData);
-		return "forms/uploadFile";
+		if(session.getAttribute("userSession")!=null) {
+			FileData fileData = new FileData() ; 
+			fileData.setCorpus(metier.getAllCorpus());
+			model.addAttribute("fileData",fileData);
+			return "forms/uploadFile";
+		}
+		else {
+			return "redirect:forms/login";
+		}
 	}
 	
 	@RequestMapping(value = "deleteFile/{id}")

@@ -49,7 +49,7 @@ public class FormsRender {
 		return "data/home";
 	}
 	@RequestMapping(value = "/index")
-	public String index(Model model) {
+	public String index(Model model, HttpSession session) {
 		// this controller allows to create a new user account
 		model.addAttribute("loginDetails",new LoginDetails());
 		return "forms/login";
