@@ -1,6 +1,9 @@
 package org.ceri.gestiondonnees.controllers;
 
 import java.util.Collection;
+
+import javax.servlet.http.HttpSession;
+
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.User;
 import org.ceri.gestiondonnees.metier.IUserMetier;
@@ -24,7 +27,10 @@ public class UserController {
 	private JavaMailSender mailSender ;
 	
 	@RequestMapping(value="/users", method = RequestMethod.GET)
-    public String usersList(Model model) {
+    public String usersList(Model model, HttpSession session) {
+		
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		Collection<User> users = metier.getAllUsers();
 		model.addAttribute("users", users);
         return "data/usersList";
@@ -66,7 +72,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "deleteUser/{id}", method = RequestMethod.GET)
-	public String deleteRole(@PathVariable("id") int id, Model model) {
+	public String deleteRole(@PathVariable("id") int id, Model model, HttpSession session ) {
+		if( session.getAttribute("userSession") == null)
+			return "rediret:/index";
 		metier.deleteUser(id) ; 
 		return "redirect:/users";
 	}

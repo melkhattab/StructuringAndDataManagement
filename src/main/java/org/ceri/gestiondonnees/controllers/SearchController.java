@@ -34,21 +34,21 @@ public class SearchController {
 	private IUserMetier metier ;
 	
 	@RequestMapping(value="search", method = RequestMethod.GET)
-    public String search(Model model) {
+    public String search(Model model, HttpSession session) {
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		model.addAttribute("fileData", new FileData());
 		return "data/searchPage";
 	}
 	
 	@RequestMapping(value="searchFiles")
-    public String searchFiles(Model model, FileData fileData) {
+    public String searchFiles(Model model, FileData fileData, HttpSession session) {
+		
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		String criteria   = fileData.getSearchBy();
 		String searchValue = fileData.getSearchValue();
 		String xQuery  ;
-		/*
-		if(criteria.equalsIgnoreCase("corpus")) {
-			System.out.println("Corpus");
-			xQuery = "for $doc in /Document where $doc/Corpus = "+searchValue+" return $doc/path/text()" ;
-		}*/
 
 		xQuery = " for $doc in /DOCUMENT "
 				+ "	let $path := $doc/PATH "
@@ -101,8 +101,9 @@ public class SearchController {
 						    		@RequestParam("id") int wordId, 
 						    		HttpSession queryResult ) {
 		
-//		String contextBefore ; 
-//		String contextAfter ;
+
+		if( queryResult.getAttribute("userSession") == null)
+			return "redirect:/index";
 		
 		StringBuilder contextBefore = new StringBuilder(50);
 		StringBuilder contextAfter = new StringBuilder(50);
@@ -140,6 +141,10 @@ public class SearchController {
 	@RequestMapping(value="redirect", method = RequestMethod.GET)
     public String searchMoreLessContext(Model model, FileData fileData, 
 						    		HttpSession queryResult ) {
+		
+		if( queryResult.getAttribute("userSession") == null)
+			return "redirect:/index";
+		
 		String redirect = fileData.getRequestContext();
 		if(redirect.toLowerCase().equals("more context")) {
 			getMoreContext(model, queryResult);

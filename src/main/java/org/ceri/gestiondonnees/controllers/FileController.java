@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.ceri.gestiondonnees.entities.Corpus;
 import org.ceri.gestiondonnees.entities.File;
+import org.ceri.gestiondonnees.entities.User;
 import org.ceri.gestiondonnees.metier.IUserMetier;
 import org.ceri.gestiondonnees.models.FileData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,25 +27,36 @@ public class FileController {
 	String filesServerLocation = "F:/Workspace JEE/Corpus/";
 	
 	@RequestMapping(value="files", method = RequestMethod.GET)
-    public String displayAllFiles(Model model) throws Exception{
-		
-		Collection<File> files = metier.getAllFiles();
-		model.addAttribute("files", files);
-		FileData fileData = new FileData() ; 
-		fileData.setCorpus(metier.getAllCorpus());
-		model.addAttribute("fileData", fileData );
-        return "data/files";
+    public String displayAllFiles(Model model, HttpSession session) throws Exception{
+		User user = (User) session.getAttribute("userSession");
+		if(user != null){
+			Collection<File> files = metier.getAllFiles();
+			model.addAttribute("files", files);
+			FileData fileData = new FileData() ; 
+			fileData.setCorpus(metier.getAllCorpus());
+			model.addAttribute("fileData", fileData );
+	        return "data/files";
+		}
+		else {
+			return "redirect:/index";
+		}
     }
 	
 	@RequestMapping(value="getFiles", method = RequestMethod.POST)
-    public String displayFiles(Model model, FileData fileData ) {
+    public String displayFiles(Model model, FileData fileData, HttpSession session ) {
 		
-		String xQuery = "for $x in /bookstores/book/author[1]/text() return $x";
-		FileInExistDB.getFile(xQuery);
-		String name  = fileData.getFileName();
-		Collection<File> files = metier.getFilesByName(name);
-		model.addAttribute("files", files);
-        return "data/files";
+		User user = (User) session.getAttribute("userSession");
+		if(user != null){
+			String xQuery = "for $x in /bookstores/book/author[1]/text() return $x";
+			FileInExistDB.getFile(xQuery);
+			String name  = fileData.getFileName();
+			Collection<File> files = metier.getFilesByName(name);
+			model.addAttribute("files", files);
+	        return "data/files";
+		}
+		else {
+			return "redirect:/index";
+		}
     }
 	
 	@RequestMapping(value = "uploadFile", method = RequestMethod.GET)
@@ -57,7 +69,7 @@ public class FileController {
 			return "forms/uploadFile";
 		}
 		else {
-			return "redirect:forms/login";
+			return "redirect:/index";
 		}
 	}
 	
@@ -76,7 +88,8 @@ public class FileController {
 	 */
 	@RequestMapping(value = "addFile", method = RequestMethod.POST)
 	public  String uploadFileHandler(Model model, @RequestParam("file") MultipartFile file, FileData fileData, HttpSession session) {
-		
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		if (!file.isEmpty()) {
 			try {
 				String destination = filesServerLocation+"/"+fileData.getSelectedCorpus()+"/"+file.getOriginalFilename();
@@ -94,7 +107,7 @@ public class FileController {
 				fileData.setFileName(fileName);
 				boolean bool = FileInExistDB.putFile(fileData, "admin","admin");
 				if(bool == true) {
-					addFileToDataBase(file, fileData);
+					addFileToDataBase(file, fileData, session);
 				}
 				return "redirect:files" ;
 			} catch (Exception e) {	
@@ -104,7 +117,11 @@ public class FileController {
 		return "redirect:files" ;
 	}
 	
-	private String addFileToDataBase(MultipartFile file, FileData fileData) {
+	private String addFileToDataBase(MultipartFile file, FileData fileData, HttpSession session) {
+		
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
+		
 		String name   = FilenameUtils.getBaseName(file.getOriginalFilename());
 		Long size   = file.getSize();
 		String path = fileData.getPath();
@@ -113,7 +130,7 @@ public class FileController {
 		if(existingFile!= null && existingFile.getSize().equals(size) && existingFile.getFileType().equals(fileType)) {
 			return "le document est déjà existant" ;
 		}
-		else {
+		else{
 			Corpus selectedCorpus = metier.getCorpusByName(fileData.getSelectedCorpus()) ;
 			File document = new File(name, path, fileType , size);
 			document.setCorpus(selectedCorpus);

@@ -22,11 +22,11 @@
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th>Nom du corpus</th>
+									<th>Corpus Name</th>
 									<th>Description</th>
-									<th>Laboratoires associés</th>
-									<th>Créé par </th>
-									<th>Modifier/Supprimer </th>
+									<th>Laboratory</th>
+									<th>Created by</th>
+									<th>Actions </th>
 							   </tr>
 							</thead>
 							<tbody>
@@ -39,8 +39,13 @@
 											EL KHATTAB Mahmoud		<!-- created by -->
 										</td>
 										<td>
-											<a href="updateCorpus">Modifier</a>--
-											<a href="<c:url value='deleteCorpus/${corpus.idCorpus}' />" >Supprimer</a>
+											
+											<a href="<c:url value='updateCorpus/${corpus.idCorpus}' />" >
+												<img  width="23" alt="icon not found" src="<%=request.getContextPath()%>/resources/img/update.png">
+											</a>
+											<a href="<c:url value='deleteCorpus/${corpus.idCorpus}' />">
+												<img alt="icon not found" width="25" src="<%=request.getContextPath()%>/resources/img/delete.png">
+											</a>
 										</td>
 									</tr>
 								   </c:forEach>								

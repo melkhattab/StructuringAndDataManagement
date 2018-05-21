@@ -29,7 +29,7 @@ public class CorpusController {
 			model.addAttribute("allCorpus", allCorpus);
 	        return "data/corpus";
 		}
-		return "redirect:form/index";
+		return "redirect:index";
     }
 	
 	@RequestMapping(value = "addCorpus", method = RequestMethod.GET)
@@ -40,24 +40,36 @@ public class CorpusController {
 			model.addAttribute("corpus",new CorpusData());
 			return "forms/createCorpus";
 		}
-		return "redirect:form/index";
+		return "redirect:index";
 		
 	}
 	
 	@RequestMapping(value = "createCorpus", method = RequestMethod.POST)
 	public String displayCorpusForm(Model model, CorpusData corpusInf, HttpSession session) {
 		// this controller allows to create a new user account
-		Corpus corpus =  new Corpus(corpusInf.getCorpusName(), corpusInf.getDescription(), corpusInf.getCapacity()) ; 
-		User creator = (User)session.getAttribute("userSession");
-		corpus.setCreator(creator);
-		metier.addCorpus(corpus);
-		return "redirect:corpus";
+		User user = (User) session.getAttribute("userSession");
+		if(user != null){
+			Corpus corpus =  new Corpus(corpusInf.getCorpusName(), corpusInf.getDescription(), corpusInf.getCapacity()) ; 
+			User creator = (User)session.getAttribute("userSession");
+			corpus.setCreator(creator);
+			metier.addCorpus(corpus);
+			return "redirect:corpus";
+		}
+		else {
+			return "redirect:/index";
+		}
 	}
 	
 	@RequestMapping(value = "deleteCorpus/{id}")
-	public String deleteCorpus(@PathVariable("id") int id, Model model) {
+	public String deleteCorpus(@PathVariable("id") int id, Model model, HttpSession session) {
 		// this controller allows to create a new user account
-		metier.deleteCorpus(id) ; 
-		return "redirect:/corpus";
+		User user = (User) session.getAttribute("userSession");
+		if(user != null){
+			metier.deleteCorpus(id) ; 
+			return "redirect:/corpus";  
+		}
+		else {
+			return "redirect:/index";
+		}
 	}	
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.ceri.gestiondonnees.entities.Corpus;
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.User;
@@ -27,21 +29,27 @@ public class LaboratoryController {
 	private IUserMetier metier ;
 	 
 	@RequestMapping(value = "laboratories",  method = RequestMethod.GET)
-	public String laboratoriesList(Model model) {
+	public String laboratoriesList(Model model, HttpSession session) {
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		Collection<Laboratory> laboratories = metier.getAllLaboratories();
 		model.addAttribute("laboratories",laboratories);
 		return "data/laboratories";
 	}
 	
 	@RequestMapping(value = "addLaboratory", method = RequestMethod.GET)
-	public String addLaboratoryForm(Model model) {
-		// this controller allows to create a new user account
+	public String addLaboratoryForm(Model model, HttpSession session) {
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		model.addAttribute("labData",new LaboratoryData());
 		return "forms/createLaboratory";
 	}
 	
 	@RequestMapping(value = "addLab", method = RequestMethod.POST)
-	public String createLaboratory(Model model, LaboratoryData labData) {
+	public String createLaboratory(Model model, LaboratoryData labData, HttpSession session) {
+		
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		
 		Laboratory laboratory = metier.getLaboratoryByName(labData.getName());
 		if(laboratory == null && labData.getName()!=null) {
@@ -57,8 +65,12 @@ public class LaboratoryController {
 	}
 	
 	@RequestMapping(value = "deleteLaboratory/{id}", method = RequestMethod.GET)
-	public String deleteLaboratory(@PathVariable("id") int id, Model model) {
+	public String deleteLaboratory(@PathVariable("id") int id, Model model, HttpSession session) {
 		// this controller allows to create a new user account
+		
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
+		
 		metier.deleteLaboratory(id);
 		return "redirect:/laboratories";
 	}

@@ -54,7 +54,7 @@
 			
 			<tr>
 				<th class="concordtable">
-					<a class="menuHeaderItem">Administrator</a>
+					<a class="menuHeaderItem">Platform administration</a>
 				</th>
 			</tr>
 			<tr>

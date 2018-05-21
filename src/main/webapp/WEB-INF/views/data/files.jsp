@@ -41,14 +41,14 @@
 								<table class="table table-striped">
 									<thead>
 										<tr>
-											<th>Nom</th>
+											<th>File name</th>
 											<th>Type</th>
-											<th>Taille(Octet)</th>
+											<th>Size(Octet)</th>
 											<th>URL</th>
-											<th>Propriétaire</th>
-											<th>Contributeur</th>
+											<th>Owner</th>
+											<th>Contributor</th>
 											<th>Corpus</th>
-											<th>Modifier/Supprimer </th>
+											<th>Actions </th>
 									   </tr>
 									</thead>
 									<tbody>
@@ -68,8 +68,12 @@
 													${file.corpus.name }
 												</td>
 												<td>
-													<a href="updateFile">Modifier</a>--
-													<a href="<c:url value='deleteFile/${file.idFile}' />" >Supprimer</a>
+													<a href="<c:url value='updateFile/${file.idFile}' />" >
+														<img  width="23" alt="icon not found" src="<%=request.getContextPath()%>/resources/img/update.png">
+													</a>
+													<a href="<c:url value='deleteFile/${file.idFile}' />" >
+														<img alt="icon not found" width="25" src="<%=request.getContextPath()%>/resources/img/delete.png">
+													</a>
 												</td>
 											</tr>
 										   </c:forEach>								

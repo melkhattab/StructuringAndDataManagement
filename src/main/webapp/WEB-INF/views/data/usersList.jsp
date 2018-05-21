@@ -22,13 +22,13 @@
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th>Nom</th>
-									<th>Prénom</th>
+									<th>First Name</th>
+									<th>Last Name</th>
 									<th>Email</th>
-									<th>Laboratoire</th>
+									<th>Laboratory</th>
 									<th>Role</th>
 									<th>Permissions</th>
-									<th>Modifier/Supprimer</th>
+									<th>Actions</th>
 							   </tr>
 							</thead>
 							<tbody>
@@ -59,8 +59,12 @@
 										</td>
 										<td>RWUD</td>
 										<td>
-											<a href="updateUser">Modifier</a>--
-											<a href="<c:url value='deleteUser/${user.id}' />" >Supprimer</a>
+											<a href="<c:url value='updateUser/${user.id}' />" >
+												<img  width="23" alt="icon not found" src="<%=request.getContextPath()%>/resources/img/update.png">
+											</a>
+											<a href="<c:url value='deleteUser/${user.id}' />">
+												<img alt="icon not found" width="25" src="<%=request.getContextPath()%>/resources/img/delete.png">
+											</a>
 										</td>
 									</tr>
 								   </c:forEach>								

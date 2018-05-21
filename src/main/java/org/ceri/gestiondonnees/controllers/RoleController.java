@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.ceri.gestiondonnees.entities.Corpus;
 import org.ceri.gestiondonnees.entities.Laboratory;
 import org.ceri.gestiondonnees.entities.Permission;
@@ -31,15 +33,18 @@ public class RoleController {
 
 	
 	@RequestMapping(value = "addRole")
-	public String addRoleForm(Model model) {
-		// this controller allows to create a new user account
+	public String addRoleForm(Model model,HttpSession session) {
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		model.addAttribute("roleData",new RoleData());
 		return "forms/createRole";
 	} 
 	
 	@RequestMapping(value = "roles")
-	public String rolesList(Model model) {
+	public String rolesList(Model model, HttpSession session) {
 		// this controller allows to create a new user account
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		Collection<Role> roles = metier.getAllRoles();
 		model.addAttribute("roles",roles);
 		return "data/rolesList";
@@ -47,7 +52,11 @@ public class RoleController {
 	
 
 	@RequestMapping(value = "createRole", method = RequestMethod.POST)
-	public String createRole(Model model, RoleData roledata) {
+	public String createRole(Model model, RoleData roledata, HttpSession session) {
+		
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
+		
 		Role role = metier.getRoleByLibelle(roledata.getRole());
 		if(role == null && roledata.getRole()!=null) {
 			role = new Role(roledata.getRole(), roledata.getDescription()) ; 
@@ -64,7 +73,10 @@ public class RoleController {
 		
 	}
 	@RequestMapping(value = "deleteRole/{libelle}", method = RequestMethod.GET)
-	public String deleteRole(@PathVariable("libelle") String libelle, Model model) {
+	public String deleteRole(@PathVariable("libelle") String libelle, Model model, HttpSession session) {
+		
+		if( session.getAttribute("userSession") == null)
+			return "redirect:/index";
 		
 		if( metier.deleteRole(libelle)) {
 			model.addAttribute("deleteResult", "success");
